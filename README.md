@@ -6,7 +6,7 @@ A Ruby wrapper for the General Transit Feed Specification
 
 Initialize a new GTFS source:
 
-    source = GTFS::Source.new(<URI or Path to GTFS zip file)
+    source = GTFS::Source.build(<URI or Path to GTFS zip file>)
 
 Accessing GTFS data from the source:
 
