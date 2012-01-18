@@ -1,0 +1,70 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :get
+    uri: http://www.edschmalzle.com:80/gtfs.zip
+    body: !!null 
+    headers: !!null 
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 404
+      message: Not Found
+    headers:
+      date:
+      - Wed, 18 Jan 2012 05:04:53 GMT
+      server:
+      - Apache
+      vary:
+      - Cookie,Accept-Encoding
+      x-pingback:
+      - http://www.edschmalzle.com/xmlrpc.php
+      expires:
+      - Wed, 11 Jan 1984 05:00:00 GMT
+      cache-control:
+      - no-cache, must-revalidate, max-age=0
+      pragma:
+      - no-cache
+      last-modified:
+      - Wed, 18 Jan 2012 05:04:54 GMT
+      transfer-encoding:
+      - chunked
+      content-type:
+      - text/html; charset=UTF-8
+    body: ! "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html
+      xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en-US\">\r\n<head
+      profile=\"http://gmpg.org/xfn/11\">\r\n<meta http-equiv=\"Content-Type\" content=\"text/html;
+      charset=UTF-8\" />\r\n<title>Ed Schmalzle   &raquo; Page not found</title>\r\n<link
+      rel=\"stylesheet\" href=\"http://www.edschmalzle.com/wp-content/themes/shallowgrunge/shallowgrunge/style.css\"
+      type=\"text/css\" media=\"screen\" />\r\n<link rel=\"alternate\" type=\"application/rss+xml\"
+      title=\"Ed Schmalzle RSS Feed\" href=\"http://www.edschmalzle.com/feed/\" />\r\n<link
+      rel=\"pingback\" href=\"http://www.edschmalzle.com/xmlrpc.php\" />\r\n<script
+      type='text/javascript' src='http://www.edschmalzle.com/wp-includes/js/jquery/jquery.js?ver=1.7.1'></script>\n<script
+      type='text/javascript' src='http://www.edschmalzle.com/wp-content/plugins/google-analyticator/external-tracking.min.js?ver=6.2'></script>\n<link
+      rel=\"EditURI\" type=\"application/rsd+xml\" title=\"RSD\" href=\"http://www.edschmalzle.com/xmlrpc.php?rsd\"
+      />\n<link rel=\"wlwmanifest\" type=\"application/wlwmanifest+xml\" href=\"http://www.edschmalzle.com/wp-includes/wlwmanifest.xml\"
+      /> \n<meta name=\"generator\" content=\"WordPress 3.3.1\" />\n<!-- Google Analytics
+      Tracking by Google Analyticator 6.2: http://ronaldheft.com/code/analyticator/
+      -->\n<script type=\"text/javascript\">\n\tvar analyticsFileTypes = [''];\n\tvar
+      analyticsEventTracking = 'enabled';\n</script>\n<script type=\"text/javascript\">\n\tvar
+      _gaq = _gaq || [];\n\t_gaq.push(['_setAccount', 'UA-378745-4']);\n\t_gaq.push(['_trackPageview']);\n\t_gaq.push(['_trackPageLoadTime']);\n\n\t(function()
+      {\n\t\tvar ga = document.createElement('script'); ga.type = 'text/javascript';
+      ga.async = true;\n\t\tga.src = ('https:' == document.location.protocol ? 'https://ssl'
+      : 'http://www') + '.google-analytics.com/ga.js';\n\t\tvar s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);\n\t})();\n</script>\n</head>\r\n<body>\r\n<div
+      id=\"wrapper\">\r\n<div id=\"wrapper2\">\r\n\r\n<div id=\"header\">\r\n\t<div
+      id=\"logo\">\r\n\t\t<h1><a href=\"http://www.edschmalzle.com/\">Ed Schmalzle</a></h1>\r\n\t\t<p></p>\r\n\t</div>\r\n</div>\r\n<!--
+      end #header -->\r\n<div id=\"menu\">\r\n\t<ul>\r\n\t\t<li class=\"page_item\"><a
+      href=\"http://www.edschmalzle.com/\">Blog</a></li>\r\n\t\t<li class=\"page_item
+      page-item-60\"><a href=\"http://www.edschmalzle.com/projects/\">Projects</a></li>\n<li
+      class=\"page_item page-item-5\"><a href=\"http://www.edschmalzle.com/resume/\">Resume</a></li>\n<li
+      class=\"page_item page-item-6\"><a href=\"http://www.edschmalzle.com/contact/\">Contact</a></li>\n<li
+      class=\"page_item page-item-75\"><a href=\"http://www.edschmalzle.com/archives/\">Archives</a></li>\n\t\t<li
+      class=\"page_item\"><a href=\"http://www.edschmalzle.com/feed/\">RSS</a></li>\r\n\t</ul>\r\n</div>\r\n<!--
+      end #menu -->\r\n</div>\r\n<hr />\r\n\r\n<div id=\"page\">\r\n\t<div id=\"content\"
+      class=\"narrowcolumn\">\r\n\r\n\t\t<h2 class=\"center\">Error 404 - Not Found</h2>\r\n\r\n\t</div>\r\n\r\n<div
+      id=\"sidebar\">\r\n\t<ul>\r\n\t</ul>\r\n</div>\r\n<!-- end #sidebar -->\r\n\r\n<div
+      style=\"clear: both;\">&nbsp;</div>\r\n</div>\r\n<!-- end #page -->\r\n<hr />\r\n</div>\r\n</div>\r\n<!--
+      end #footer -->\r\n<div id=\"footer\">\r\n\t<div>\r\n\t\t<p>Copyright (c) 2008\r\n\t\t\tEd
+      Schmalzle\t\t\tAll rights reserved. Design by <a href=\"http://www.freewpthemes.net/\">Free
+      WordPress Themes</a> &nbsp;&bull;&nbsp;\r\n\t\t\tPowered by <a href=\"http://wordpress.org/\">WordPress</a></p>\r\n\t</div>\r\n</div>\r\n</body></html>"
+    http_version: '1.1'
