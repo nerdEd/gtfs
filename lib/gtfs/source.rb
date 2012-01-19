@@ -1,4 +1,5 @@
 require 'tmpdir'
+require 'fileutils'
 require 'zip/zip'
 
 module GTFS
@@ -11,10 +12,26 @@ module GTFS
     attr_accessor :source, :archive
 
     def initialize(source)
-      load_archive(source)
+      raise 'Source cannot be nil' if source.nil?
+
+      @tmp_dir = Dir.mktmpdir
+      ObjectSpace.define_finalizer(self, self.class.finalize(@tmp_dir))
+
       @source = source
-      if !has_required_sources?
-        raise InvalidSourceException.new('Missing required source files')
+      load_archive(@source)
+
+      raise InvalidSourceException.new('Missing required source files') if missing_sources?
+    end
+
+    def self.finalize(directory)
+      proc {FileUtils.rm_rf(directory)}
+    end
+
+    def extract_to_cache(source_path)
+      Zip::ZipFile.open(source_path) do |zip|
+        zip.entries.each do |entry|
+          zip.extract(entry.name, File.join(@tmp_dir, '/', entry.name))
+        end
       end
     end
 
@@ -30,14 +47,17 @@ module GTFS
       end
     end
 
-    def has_required_sources?
-      return false if @archive.nil?
+    def entries
+      Dir.entries(@tmp_dir)
+    end
 
-      entries = @archive.entries.map(&:to_s)
+    def missing_sources?
+      return true if @source.nil?
+
       REQUIRED_SOURCE_FILES.each do |rf|
-        return false if !entries.include?(rf)
+        return true if !entries.include?(rf)
       end
-      true
+      false
     end
   end
 end

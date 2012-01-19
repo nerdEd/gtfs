@@ -12,7 +12,7 @@ module GTFS
         open(file_name, 'w') do |file|
           file.write response.body
         end
-        @archive = Zip::ZipFile.open(file_name)
+        extract_to_cache(file_name)
       end
     rescue Exception => e
       raise InvalidSourceException.new(e.message)
