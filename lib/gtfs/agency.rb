@@ -2,25 +2,26 @@ require 'CSV'
 
 module GTFS
   class Agency
-    REQUIRED_FIELDS = %w{agency_name agency_url agency_timezone}
-    OPTIONAL_FIELDS = %w{agency_id agency_lang agency_phone agency_fare_url}
-    FIELDS = REQUIRED_FIELDS + OPTIONAL_FIELDS
+    REQUIRED_ATTRS =  %w{name url timezone}
+    OPTIONAL_ATTRS = %w{id lang phone fare_url}
+    ATTRS = REQUIRED_ATTRS + OPTIONAL_ATTRS
 
-    ATTRS = *FIELDS.map{|f| f.gsub(/^agency_/, '')}
     attr_accessor *ATTRS
 
     def initialize(attrs)
       attrs.each do |key, val|
-        att = key.gsub(/^agency_/, '') + '='
-        send(att.to_sym, val)
+        instance_variable_set("@#{key}", val)
       end
     end
 
     def valid?
-      REQUIRED_FIELDS.map{|f| f.gsub(/^agency_/, '')}.each do |f|
-        return false if self.send(f.to_sym) == nil
-      end
-      true
+      !REQUIRED_ATTRS.any?{|f| self.send(f.to_sym).nil?}
+    end
+
+    def self.strip_prefix(source)
+      prefix = /agency_/
+      return source.gsub(prefix, '') unless source.respond_to?(:each)
+      source.map {|s| s.gsub(prefix, '')}  
     end
 
     def self.parse_agencies(data)
@@ -28,7 +29,11 @@ module GTFS
 
       agencies = []
       CSV.parse(data, :headers => true) do |row|
-        agency = Agency.new(row.to_hash)
+        attr_hash = {}
+        row.to_hash.each do |key, val|
+          attr_hash[strip_prefix(key)] = val
+        end
+        agency = Agency.new(attr_hash)
         agencies << agency if agency.valid?
       end
       agencies

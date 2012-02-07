@@ -1,27 +1,37 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe GTFS::Source do
+  let(:valid_local_source) {File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs.zip')}
+
   describe '#build' do
+    subject {GTFS::Source.build(data_source)}
+    before do
+      GTFS::URLSource.stub(:new).and_return('URLSource')
+      GTFS::LocalSource.stub(:new).and_return('LocalSource')
+    end
+
     context 'with a url as a data root' do
-      it 'should return an instance of url source' do
-      end
+      let(:data_source) {'http://www.edschmalzle.com/gtfs.zip'}
+
+      it {should == 'URLSource'}
     end
 
     context 'with a file path as a data root' do
-      it 'should return an instance of local source' do
-      end
-    end
+      let(:data_source) {valid_local_source}
 
-    context 'with no data root' do
-      it 'should throw an invalid source exception' do
-      end
+      it {should == 'LocalSource'}
     end
-  end
-
-  describe '#local_source?' do
   end
 
   describe '#agencies' do
+    subject {source.agencies}
+
+    context 'when the source has agencies' do
+      let(:source) {GTFS::Source.build(valid_local_source)}
+
+      it {should_not be_empty}
+      its(:first) {should be_an_instance_of(GTFS::Agency)}
+    end
   end
 
   describe '#stops' do

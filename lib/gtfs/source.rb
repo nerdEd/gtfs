@@ -59,5 +59,12 @@ module GTFS
       end
       false
     end
+
+    def agencies
+      open(File.join(@tmp_dir, '/', 'agency.txt')) do |f|
+        @agencies ||= Agency.parse_agencies(f.read)
+      end
+      @agencies
+    end
   end
 end
