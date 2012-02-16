@@ -6,6 +6,8 @@ module GTFS
       base.extend ClassMethods
 
       const_set('PREFIX', '')
+      const_set('OPTIONAL_ATTRS', [])
+      const_set('REQUIRED_ATTRS', [])
 
       def valid?
         !self.class::REQUIRED_ATTRS.any?{|f| self.send(f.to_sym).nil?}
