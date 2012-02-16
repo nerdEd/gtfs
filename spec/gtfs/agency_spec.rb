@@ -6,6 +6,7 @@ describe GTFS::Agency do
     let(:invalid_header_line) {"agency_id,agency_url,agency_timezone,agency_lang,agency_phone\n"}
     let(:valid_line) {"1,Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,en,410-539-5000\n"}
     let(:invalid_line) {"1,,http://www.mta.maryland.gov,America/New_York,en,410-539-5000\n"}
+
     subject {GTFS::Agency.parse_agencies(source_text)}
 
     context 'with a nil source' do

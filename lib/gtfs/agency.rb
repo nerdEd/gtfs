@@ -18,12 +18,6 @@ module GTFS
       !REQUIRED_ATTRS.any?{|f| self.send(f.to_sym).nil?}
     end
 
-    def self.strip_prefix(source)
-      prefix = /agency_/
-      return source.gsub(prefix, '') unless source.respond_to?(:each)
-      source.map {|s| s.gsub(prefix, '')}  
-    end
-
     def self.parse_agencies(data)
       return [] if data.nil? || data.empty?
 
@@ -31,7 +25,7 @@ module GTFS
       CSV.parse(data, :headers => true) do |row|
         attr_hash = {}
         row.to_hash.each do |key, val|
-          attr_hash[strip_prefix(key)] = val
+          attr_hash[key.gsub(/^agency_/, '')] = val
         end
         agency = Agency.new(attr_hash)
         agencies << agency if agency.valid?
