@@ -1,3 +1,4 @@
+require 'gtfs/model'
 require 'gtfs/agency'
 require 'gtfs/calendar'
 require 'gtfs/calendar_date'
