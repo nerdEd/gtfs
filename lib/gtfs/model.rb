@@ -1,7 +1,11 @@
+require 'CSV'
+
 module GTFS
   module Model
     def self.included(base)
       base.extend ClassMethods
+
+      const_set('PREFIX', '')
 
       def valid?
         !self.class::REQUIRED_ATTRS.any?{|f| self.send(f.to_sym).nil?}

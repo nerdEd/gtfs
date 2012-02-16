@@ -1,5 +1,3 @@
-require 'CSV'
-
 module GTFS
   class Agency
     include GTFS::Model

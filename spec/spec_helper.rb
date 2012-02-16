@@ -7,6 +7,8 @@ require 'vcr'
 require 'ruby-debug'
 require 'gtfs'
 
+require File.expand_path(File.dirname(__FILE__) + '/support/model_shared_examples')
+
 RSpec.configure do |config|
   # Configure you some RSpec
 end
