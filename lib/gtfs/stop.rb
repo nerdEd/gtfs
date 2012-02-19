@@ -1,8 +1,9 @@
 module GTFS
   class Stop 
     include GTFS::Model
-    required_attrs :id, :name, :lat, :lon
-    optional_attrs :code, :desc, :zone_id, :url, :location_type, :parent_station, :timezone
+    
+    has_required_attrs :id, :name, :lat, :lon
+    has_optional_attrs :code, :desc, :zone_id, :url, :location_type, :parent_station, :timezone
     column_prefix :stop_
     attr_accessor *attrs
 
