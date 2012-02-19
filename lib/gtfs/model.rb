@@ -5,7 +5,7 @@ module GTFS
     def self.included(base)
       base.extend ClassMethods
 
-      const_set('PREFIX', '')
+      base.class_variable_set('@@prefix', '')
       const_set('OPTIONAL_ATTRS', [])
       const_set('REQUIRED_ATTRS', [])
 
@@ -21,6 +21,10 @@ module GTFS
     end
 
     module ClassMethods
+      def prefix
+        self.class_variable_get('@@prefix')
+      end
+
       def required_attrs(*attrs)
         const_set('REQUIRED_ATTRS', attrs)
       end
@@ -30,7 +34,7 @@ module GTFS
       end
 
       def column_prefix(prefix)
-        const_set('PREFIX', prefix)
+        self.class_variable_set('@@prefix', prefix)
       end
 
       def attrs
@@ -44,7 +48,7 @@ module GTFS
         CSV.parse(data, :headers => true) do |row|
           attr_hash = {}
           row.to_hash.each do |key, val|
-            attr_hash[key.gsub(/^#{self::PREFIX}/, '')] = val
+            attr_hash[key.gsub(/^#{prefix}/, '')] = val
           end
           model = self.new(attr_hash)
           models << model if model.valid?
