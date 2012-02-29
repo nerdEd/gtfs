@@ -66,5 +66,49 @@ module GTFS
       end
       @agencies
     end
+
+    def stops
+      open(File.join(@tmp_dir, '/', 'stops.txt')) do |f|
+        @stops ||= Stop.parse_stops(f.read)
+      end
+      @stops
+    end
+
+    def calendars
+      open(File.join(@tmp_dir, '/', 'calendar.txt')) do |f|
+        @calendars ||= Calendar.parse_calendars(f.read)
+      end
+      @calendars
+    end
+
+    def routes
+      open(File.join(@tmp_dir, '/', 'routes.txt')) do |f|
+        @routes ||= Route.parse_routes(f.read)
+      end
+      @routes
+    end
+
+    # TODO: huge, isn't practical to parse all at once
+    def shapes
+      open(File.join(@tmp_dir, '/', 'shapes.txt')) do |f|
+        @shapes ||= Shape.parse_shapes(f.read)
+      end
+      @shapes
+    end
+
+    def trips
+      open(File.join(@tmp_dir, '/', 'trips.txt')) do |f|
+        @trips ||= Trip.parse_trips(f.read)
+      end
+      @trips
+    end
+
+    # TODO: huge, isn't practical to parse all at once
+    def stop_times
+      open(File.join(@tmp_dir, '/', 'stop_times.txt')) do |f|
+        @stop_times ||= StopTime.parse_stop_times(f.read)
+      end
+      @stop_times
+    end
   end
 end
