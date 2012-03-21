@@ -7,7 +7,7 @@ GEM
     fakeweb (1.3.0)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
-    multi_json (1.1.0)
+    multi_json (1.0.4)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -38,6 +38,7 @@ PLATFORMS
 
 DEPENDENCIES
   fakeweb
+  multi_json (= 1.0.4)
   rspec
   ruby-debug19
   rubyzip
