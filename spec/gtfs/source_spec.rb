@@ -2,9 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe GTFS::Source do
   let(:valid_local_source) {File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs.zip')}
+  let(:source_missing_required_files) {File.expand_path(File.dirname(__FILE__) + '/../fixtures/missing_files.zip')}
 
   describe '#build' do
     subject {GTFS::Source.build(data_source)}
+
     before do
       GTFS::URLSource.stub(:new).and_return('URLSource')
       GTFS::LocalSource.stub(:new).and_return('LocalSource')
@@ -23,6 +25,20 @@ describe GTFS::Source do
     end
   end
 
+  describe '#build' do
+    context 'when the source lacks a required file' do
+      it 'should raise an exception if the source is missing a file' do 
+        lambda {GTFS::Source.build(source_missing_required_fields)}.should raise_exception
+      end
+    end
+  end
+
+  describe '#new(source)' do
+    it 'should not allow a base GTFS::Source to be initialized' do
+      lambda {GTFS::Source.new(valid_local_source)}.should raise_exception
+    end
+  end
+
   describe '#agencies' do
     subject {source.agencies}
 
@@ -32,6 +48,7 @@ describe GTFS::Source do
       it {should_not be_empty}
       its(:first) {should be_an_instance_of(GTFS::Agency)}
     end
+
   end
 
   describe '#stops' do
