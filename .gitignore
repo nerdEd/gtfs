@@ -1,2 +1,4 @@
 Session.vim
 coverage
+.rvmrc
+*.gem
