@@ -9,7 +9,7 @@ module GTFS
         file_name = File.join(tmp, "/gtfs_temp_#{Time.now}.zip")
         uri = URI.parse(source_url)
         response = Net::HTTP.get_response(uri)
-        open(file_name, 'w') do |file|
+        open(file_name, 'wb') do |file|
           file.write response.body
         end
         extract_to_cache(file_name)
