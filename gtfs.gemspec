@@ -1,17 +1,17 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
+require './lib/gtfs/version'
 
 Gem::Specification.new do |gem|
   gem.name    = 'gtfs'
-  # gem.version = GTFS::VERSION
-  gem.version = '0.1.0'
+  gem.version = GTFS::VERSION
   gem.date    = Date.today.to_s
  
   gem.summary = "Load and read GTFS data from zip bundles"
   gem.description = "gtfs reads GTFS data from a google-compliant Zip bundle and returns an object representing the CSV data inside"
 
-  gem.authors     = ["nerdEd", "Alec Hipshear"]
-  gem.email       = ["nerdEd?", "alec.hipshear@gmail.com"]
+  gem.authors     = ["nerdEd"]
+  gem.email       = ["nerdEd"]
   gem.homepage    = "https://github.com/nerdEd/gtfs"
 
   gem.add_dependency "rake"
