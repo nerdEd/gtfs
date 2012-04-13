@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe GTFS::URLSource do
   context 'with a URI to a valid source zip' do
-    let(:source_path) {'http://mta.maryland.gov/_googletransit/latest/google_transit.zip'}
+    let(:source_path) {'http://dl.dropbox.com/u/416235/work/valid_gtfs.zip'}
     it 'should create a new source successfully' do
       VCR.use_cassette('valid_gtfs_uri') do
         lambda {GTFS::URLSource.new(source_path)}.should_not raise_error(GTFS::InvalidSourceException)
