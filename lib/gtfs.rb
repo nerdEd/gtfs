@@ -1,3 +1,4 @@
+require 'gtfs/version'
 require 'gtfs/model'
 require 'gtfs/agency'
 require 'gtfs/calendar'
@@ -11,7 +12,3 @@ require 'gtfs/stop'
 require 'gtfs/stop_time'
 require 'gtfs/trip'
 require 'gtfs/custom_exceptions'
-
-module GTFS
-  VERSION = '0.1.0'
-end
