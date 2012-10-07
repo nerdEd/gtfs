@@ -28,7 +28,7 @@ describe GTFS::Source do
   describe '#build' do
     context 'when the source lacks a required file' do
       it 'should raise an exception if the source is missing a file' do 
-        lambda {GTFS::Source.build(source_missing_required_fields)}.should raise_exception
+        lambda {GTFS::Source.build(source_missing_required_files)}.should raise_exception GTFS::InvalidSourceException
       end
     end
   end
