@@ -19,8 +19,6 @@ module GTFS
 
       @source = source
       load_archive(@source)
-
-      raise InvalidSourceException.new('Missing required source files') if missing_sources?
     end
 
     def self.finalize(directory)
@@ -51,64 +49,64 @@ module GTFS
       Dir.entries(@tmp_dir)
     end
 
-    def missing_sources?
-      return true if @source.nil?
-
-      REQUIRED_SOURCE_FILES.each do |rf|
-        return true if !entries.include?(rf)
-      end
-      false
+    def raise_if_missing_source(filename)
+      file_missing = !entries.include?(filename)
+      raise InvalidSourceException.new("Missing required source file: #{filename}") if file_missing
     end
 
     def agencies
-      open(File.join(@tmp_dir, '/', 'agency.txt')) do |f|
-        @agencies ||= Agency.parse_agencies(f.read)
+      parse_file 'agency.txt' do |f|
+        Agency.parse_agencies(f.read)
       end
-      @agencies
     end
 
     def stops
-      open(File.join(@tmp_dir, '/', 'stops.txt')) do |f|
-        @stops ||= Stop.parse_stops(f.read)
+      parse_file 'stops.txt' do |f|
+        Stop.parse_stops(f.read)
       end
-      @stops
     end
 
     def calendars
-      open(File.join(@tmp_dir, '/', 'calendar.txt')) do |f|
-        @calendars ||= Calendar.parse_calendars(f.read)
+      parse_file 'calendar.txt' do |f|
+        Calendar.parse_calendars(f.read)
       end
-      @calendars
     end
 
     def routes
-      open(File.join(@tmp_dir, '/', 'routes.txt')) do |f|
-        @routes ||= Route.parse_routes(f.read)
+      parse_file 'routes.txt' do |f|
+        Route.parse_routes(f.read)
       end
-      @routes
     end
 
     # TODO: huge, isn't practical to parse all at once
     def shapes
-      open(File.join(@tmp_dir, '/', 'shapes.txt')) do |f|
-        @shapes ||= Shape.parse_shapes(f.read)
+      parse_file 'shapes.txt' do |f|
+        Shape.parse_shapes(f.read)
       end
-      @shapes
     end
 
     def trips
-      open(File.join(@tmp_dir, '/', 'trips.txt')) do |f|
-        @trips ||= Trip.parse_trips(f.read)
+      parse_file 'trips.txt' do |f|
+        Trip.parse_trips(f.read)
       end
-      @trips
     end
 
     # TODO: huge, isn't practical to parse all at once
     def stop_times
-      open(File.join(@tmp_dir, '/', 'stop_times.txt')) do |f|
-        @stop_times ||= StopTime.parse_stop_times(f.read)
+      parse_file 'stop_times.txt' do |f|
+        StopTime.parse_stop_times f.read
       end
-      @stop_times
+    end
+
+    def files
+      @files ||= {}
+    end
+
+    def parse_file(filename)
+      raise_if_missing_source filename
+      open File.join(@tmp_dir, '/', filename) do |f|
+        files[filename] ||= yield f
+      end
     end
   end
 end
