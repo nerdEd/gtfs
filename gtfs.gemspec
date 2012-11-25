@@ -25,8 +25,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'vcr'
   gem.add_development_dependency 'fakeweb'
 
-  gem.files = Dir['Rakefile', 
-                  '{bin,lib,spec}/**/*', 
-                  'README*', 'LICENSE*'] & `git ls-files -z`.split('\0')
+  gem.files = `git ls-files`.split("\n")
+  gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+
   gem.require_paths = ['lib']
 end
