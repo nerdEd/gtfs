@@ -1,6 +1,6 @@
 ### GTFS Ruby
 
-A Ruby wrapper for the General Transit Feed Specification
+A Ruby wrapper for the [General Transit Feed Specification](https://developers.google.com/transit/gtfs/)
 
 ### Getting started
 
