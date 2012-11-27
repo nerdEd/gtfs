@@ -1,5 +1,5 @@
 require 'net/http'
-require 'URI'
+require 'uri'
 
 module GTFS
   class URLSource < Source
