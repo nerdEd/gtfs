@@ -7,6 +7,10 @@ module GTFS
     column_prefix :stop_
     attr_accessor *attrs
 
+    collection_name :stops
+    required_file true
+    uses_filename 'stops.txt'
+
     LOCATION_TYPE_STOP = 0
     LOCATION_TYPE_STATION = 1
 

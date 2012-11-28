@@ -58,6 +58,18 @@ module GTFS
         self.class_variable_set('@@prefix', prefix)
       end
 
+      def required_file(required)
+        self.define_singleton_method(:required_file?) {required}
+      end
+
+      def collection_name(collection_name)
+        self.define_singleton_method(:name) {collection_name}
+      end
+      
+      def uses_filename(filename) 
+        self.define_singleton_method(:filename) {filename}
+      end
+
       def parse_models(data)
         return [] if data.nil? || data.empty?
 

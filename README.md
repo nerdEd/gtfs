@@ -16,9 +16,9 @@ Accessing GTFS data from the source:
     source.trips
     source.stop_times
     source.calendars
-    source.calendar_dates     # Not implemented
-    source.fare_attributes    # Not implemented
-    source.fare_rules         # Not implemented
+    source.calendar_dates     
+    source.fare_attributes    
+    source.fare_rules         
     source.shapes
-    source.frequencies        # Not implemented
-    source.transfers          # Not implemented
+    source.frequencies        
+    source.transfers          

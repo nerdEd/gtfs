@@ -8,6 +8,10 @@ module GTFS
 
     column_prefix :trip_
 
+    collection_name :trips
+    required_file true
+    uses_filename 'trips.txt'
+
     def self.parse_trips(data)
       return parse_models(data)
     end

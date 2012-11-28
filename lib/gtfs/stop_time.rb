@@ -6,6 +6,10 @@ module GTFS
     has_optional_attrs :stop_headsign, :pickup_type, :drop_off_type, :shape_dist_traveled
     attr_accessor *attrs
 
+    collection_name :stop_times
+    required_file true
+    uses_filename 'stop_times.txt'
+
     def self.parse_stop_times(data)
       return parse_models(data)
     end

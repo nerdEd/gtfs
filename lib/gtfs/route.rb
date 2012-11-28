@@ -8,6 +8,10 @@ module GTFS
 
     column_prefix :route_
 
+    collection_name :routes
+    required_file true
+    uses_filename 'routes.txt'
+
     def self.parse_routes(data)
       return parse_models(data)
     end

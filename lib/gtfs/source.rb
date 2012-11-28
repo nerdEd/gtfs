@@ -5,9 +5,13 @@ require 'zip/zip'
 module GTFS
   class Source
 
-    REQUIRED_SOURCE_FILES = %w{agency.txt stops.txt routes.txt trips.txt stop_times.txt calendar.txt}
-    OPTIONAL_SOURCE_FILES = %w{calendar_dates.txt fare_attributes.txt fare_rules.txt shapes.txt frequencies.txt transfers.txt}
-    SOURCE_FILES = REQUIRED_SOURCE_FILES + OPTIONAL_SOURCE_FILES
+    ENTITIES = [GTFS::Agency, GTFS::Stop, GTFS::Route, GTFS::Trip, GTFS::StopTime, 
+                GTFS::Calendar, GTFS::CalendarDate, GTFS::Shape, GTFS::FareAttribute,
+                GTFS::FareRule, GTFS::Frequency, GTFS::Transfer]
+
+    REQUIRED_SOURCE_FILES = ENTITIES.select(&:required_file?).map(&:filename)
+    OPTIONAL_SOURCE_FILES = ENTITIES.reject(&:required_file?).map(&:filename)
+    SOURCE_FILES = ENTITIES.map(&:filename)
 
     attr_accessor :source, :archive
 
@@ -54,54 +58,11 @@ module GTFS
       raise InvalidSourceException.new("Missing required source file: #{filename}") if file_missing
     end
 
-    def agencies
-      parse_file 'agency.txt' do |f|
-        Agency.parse_agencies(f.read)
-      end
-    end
-
-    def stops
-      parse_file 'stops.txt' do |f|
-        Stop.parse_stops(f.read)
-      end
-    end
-
-    def calendars
-      parse_file 'calendar.txt' do |f|
-        Calendar.parse_calendars(f.read)
-      end
-    end
-
-    def calendar_dates
-      open(File.join(@tmp_dir, '/', 'calendar_dates.txt')) do |f|
-        @calendar_dates ||= CalendarDate.parse_calendar_dates(f.read)
-      end
-      @calendar_dates
-    end
-
-    def routes
-      parse_file 'routes.txt' do |f|
-        Route.parse_routes(f.read)
-      end
-    end
-
-    # TODO: huge, isn't practical to parse all at once
-    def shapes
-      parse_file 'shapes.txt' do |f|
-        Shape.parse_shapes(f.read)
-      end
-    end
-
-    def trips
-      parse_file 'trips.txt' do |f|
-        Trip.parse_trips(f.read)
-      end
-    end
-
-    # TODO: huge, isn't practical to parse all at once
-    def stop_times
-      parse_file 'stop_times.txt' do |f|
-        StopTime.parse_stop_times f.read
+    ENTITIES.each do |entity|
+      define_method entity.name.to_sym do
+        parse_file entity.filename do |f|
+          entity.send("parse_#{entity.name}".to_sym, f.read) 
+        end
       end
     end
 

@@ -8,6 +8,10 @@ module GTFS
 
     column_prefix :agency_
 
+    collection_name :agencies
+    required_file true
+    uses_filename 'agency.txt'
+
     def self.parse_agencies(data)
       return parse_models(data)
     end
