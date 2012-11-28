@@ -6,7 +6,7 @@ module GTFS
     has_optional_attrs :transfer_duration
     attr_accessor *attrs
 
-    collection_name :fare_attribtues
+    collection_name :fare_attributes
     required_file false
     uses_filename 'fare_attributes.txt'
 
