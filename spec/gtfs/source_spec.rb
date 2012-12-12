@@ -23,6 +23,12 @@ describe GTFS::Source do
 
       it {should == 'LocalSource'}
     end
+
+    context 'with a file object as a data root' do
+      let(:data_source) {File.open(valid_local_source)}
+
+      it {should == 'LocalSource'}
+    end
   end
 
   describe '#new(source)' do

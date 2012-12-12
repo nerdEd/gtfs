@@ -42,10 +42,10 @@ module GTFS
     end
 
     def self.build(data_root)
-      if data_root.match(/http|www/) 
-        URLSource.new(data_root) 
-      else
+      if File.exists?(data_root)
         LocalSource.new(data_root)
+      else
+        URLSource.new(data_root) 
       end
     end
 
