@@ -1,8 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe GTFS::Source do
-  let(:valid_local_source) {File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs.zip')}
-  let(:source_missing_required_files) {File.expand_path(File.dirname(__FILE__) + '/../fixtures/missing_files.zip')}
+  let(:valid_local_source) do
+    File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs.zip')
+  end
+
+  let(:source_missing_required_files) do 
+    File.expand_path(File.dirname(__FILE__) + '/../fixtures/missing_files.zip')
+  end
 
   describe '#build' do
     subject {GTFS::Source.build(data_source)}
