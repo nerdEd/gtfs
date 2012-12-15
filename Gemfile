@@ -7,3 +7,4 @@ gem 'simplecov', :require => false
 gem 'rubyzip'
 gem 'vcr'
 gem 'fakeweb'
+gem 'debugger'
