@@ -5,7 +5,7 @@ require 'zip/zip'
 module GTFS
   class Source
 
-    ENTITIES = [GTFS::Agency, GTFS::Stop, GTFS::Route, GTFS::Trip, GTFS::StopTime, 
+    ENTITIES = [GTFS::Agency, GTFS::Stop, GTFS::Route, GTFS::Trip, GTFS::StopTime,
                 GTFS::Calendar, GTFS::CalendarDate, GTFS::Shape, GTFS::FareAttribute,
                 GTFS::FareRule, GTFS::Frequency, GTFS::Transfer]
 
@@ -45,7 +45,7 @@ module GTFS
       if File.exists?(data_root)
         LocalSource.new(data_root)
       else
-        URLSource.new(data_root) 
+        URLSource.new(data_root)
       end
     end
 
@@ -61,7 +61,7 @@ module GTFS
     ENTITIES.each do |entity|
       define_method entity.name.to_sym do
         parse_file entity.filename do |f|
-          entity.send("parse_#{entity.name}".to_sym, f.read) 
+          entity.send("parse_#{entity.name}".to_sym, f.read)
         end
       end
     end
@@ -72,7 +72,7 @@ module GTFS
 
     def parse_file(filename)
       raise_if_missing_source filename
-      open File.join(@tmp_dir, '/', filename) do |f|
+      open File.join(@tmp_dir, '/', filename), 'r:bom|utf-8' do |f|
         files[filename] ||= yield f
       end
     end
