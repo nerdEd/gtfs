@@ -10,7 +10,7 @@ Initialize a new GTFS source:
     source = GTFS::Source.build(<URI or Path to GTFS zip file>)
     
     # Relax the column checks, useful for sources that don't conform to standard
-    source = GTFS::Source.buil(<URI or Path to GTFS zip file>, {strict: false})
+    source = GTFS::Source.build(<URI or Path to GTFS zip file>, {strict: false})
     
 Accessing GTFS data from the source:
 
