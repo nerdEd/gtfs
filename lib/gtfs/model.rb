@@ -70,7 +70,7 @@ module GTFS
         self.define_singleton_method(:filename) {filename}
       end
 
-      def parse_models(data)
+      def parse_models(data, options={})
         return [] if data.nil? || data.empty?
 
         models = []
@@ -79,8 +79,9 @@ module GTFS
           row.to_hash.each do |key, val|
             attr_hash[key.gsub(/^#{prefix}/, '')] = val
           end
+
           model = self.new(attr_hash)
-          models << model if model.valid?
+          models << model if options[:strict] == false || model.valid?
         end
         models
       end

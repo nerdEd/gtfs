@@ -12,8 +12,8 @@ module GTFS
     required_file true
     uses_filename 'agency.txt'
 
-    def self.parse_agencies(data)
-      return parse_models(data)
+    def self.parse_agencies(data, options={})
+      return parse_models(data, options)
     end
   end
 end

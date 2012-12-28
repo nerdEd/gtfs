@@ -13,9 +13,11 @@ module GTFS
     OPTIONAL_SOURCE_FILES = ENTITIES.reject(&:required_file?).map(&:filename)
     SOURCE_FILES = ENTITIES.map(&:filename)
 
-    attr_accessor :source, :archive
+    DEFAULT_OPTIONS = {strict: true}
 
-    def initialize(source)
+    attr_accessor :source, :archive, :options
+
+    def initialize(source, opts={})
       raise 'Source cannot be nil' if source.nil?
 
       @tmp_dir = Dir.mktmpdir
@@ -23,6 +25,8 @@ module GTFS
 
       @source = source
       load_archive(@source)
+
+      @options = DEFAULT_OPTIONS.merge(opts)
     end
 
     def self.finalize(directory)
@@ -41,11 +45,11 @@ module GTFS
       raise 'Cannot directly instantiate base GTFS::Source'
     end
 
-    def self.build(data_root)
+    def self.build(data_root, opts={})
       if File.exists?(data_root)
-        LocalSource.new(data_root)
+        src = LocalSource.new(data_root, opts)
       else
-        URLSource.new(data_root)
+        src = URLSource.new(data_root, opts)
       end
     end
 
@@ -61,7 +65,7 @@ module GTFS
     ENTITIES.each do |entity|
       define_method entity.name.to_sym do
         parse_file entity.filename do |f|
-          entity.send("parse_#{entity.name}".to_sym, f.read)
+          entity.send("parse_#{entity.name}".to_sym, f.read, options)
         end
       end
     end

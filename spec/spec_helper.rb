@@ -12,7 +12,7 @@ require 'gtfs'
 require File.expand_path(File.dirname(__FILE__) + '/support/model_shared_examples')
 
 RSpec.configure do |config|
-  # Configure you some RSpec
+  config.extend VCR::RSpec::Macros
 end
 
 VCR.config do |c|
