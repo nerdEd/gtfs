@@ -7,7 +7,7 @@ describe GTFS::Calendar do
     let(:valid_line) {"1,1,1,1,1,1,0,0,20110828,20120204\n"}
     let(:invalid_line) {"1,,1,,1,,0,,,20120204\n"}
 
-    subject {GTFS::Calendar.parse_calendars(source_text)}
+    subject {GTFS::Calendar.parse_calendars(source_text, opts)}
 
     include_examples 'models'
   end

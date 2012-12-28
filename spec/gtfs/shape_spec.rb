@@ -7,7 +7,7 @@ describe GTFS::Shape do
     let(:valid_line) {"59135,39.354286,-76.662453,19,0.8136\n"}
     let(:invalid_line) {",39.354286,,,0.8136\n"}
 
-    subject {GTFS::Shape.parse_shapes(source_text)}
+    subject {GTFS::Shape.parse_shapes(source_text, opts)}
 
     include_examples 'models'
   end

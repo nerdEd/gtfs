@@ -7,7 +7,7 @@ describe GTFS::Trip do
     let(:valid_line) {"4679,1,982394,1 FT McHENRY,0,189021,59135\n"}
     let(:invalid_line) {",1,,1 FT McHENRY,,189021,\n"}
 
-    subject {GTFS::Trip.parse_trips(source_text)}
+    subject {GTFS::Trip.parse_trips(source_text, opts)}
 
     include_examples 'models'
   end

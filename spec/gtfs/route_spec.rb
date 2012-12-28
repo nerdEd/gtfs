@@ -7,7 +7,7 @@ describe GTFS::Route do
     let(:valid_line) {"4679,1,001,SINAI - FORT McHENRY,,3,,0000FF,FFFFFF\n"}
     let(:invalid_line) {",1,,,,3,,,FFFFFF\n"}
 
-    subject {GTFS::Route.parse_routes(source_text)}
+    subject {GTFS::Route.parse_routes(source_text, opts)}
 
     include_examples 'models'
   end

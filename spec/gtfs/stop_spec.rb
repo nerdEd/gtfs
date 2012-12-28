@@ -7,7 +7,7 @@ describe GTFS::Stop do
     let(:valid_line) {"3,C093,LANIER & SINAI HOSPITAL,39.351145,-76.663113,,,,\n"}
     let(:invalid_line) {"3,,,,-76.663113,,,,\n"}
 
-    subject {GTFS::Stop.parse_stops(source_text)}
+    subject {GTFS::Stop.parse_stops(source_text, opts)}
 
     include_examples 'models'
   end

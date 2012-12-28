@@ -7,7 +7,7 @@ describe GTFS::StopTime do
     let(:valid_line) {"982385,4:34:00,4:34:00,277,1,,0,0,\n"}
     let(:invalid_line) {",,4:34:00,,1,,,0,\n"}
 
-    subject {GTFS::StopTime.parse_stop_times(source_text)}
+    subject {GTFS::StopTime.parse_stop_times(source_text, opts)}
 
     include_examples 'models'
   end
