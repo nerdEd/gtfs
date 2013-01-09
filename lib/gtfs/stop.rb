@@ -3,7 +3,7 @@ module GTFS
     include GTFS::Model
     
     has_required_attrs :id, :name, :lat, :lon
-    has_optional_attrs :code, :desc, :zone_id, :url, :location_type, :parent_station, :timezone
+    has_optional_attrs :code, :desc, :zone_id, :url, :location_type, :parent_station, :timezone, :wheelchair_boarding
     column_prefix :stop_
     attr_accessor *attrs
 
