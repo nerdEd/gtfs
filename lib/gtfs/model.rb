@@ -64,10 +64,33 @@ module GTFS
 
       def collection_name(collection_name)
         self.define_singleton_method(:name) {collection_name}
+
+        self.define_singleton_method(:singular_name) {
+          self.to_s.split('::').last.
+            gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+            gsub(/([a-z\d])([A-Z])/,'\1_\2').
+            tr("-", "_").downcase
+        }
       end
-      
-      def uses_filename(filename) 
+
+      def uses_filename(filename)
         self.define_singleton_method(:filename) {filename}
+      end
+
+      def each(filename)
+        CSV.foreach(filename, :headers => true) do |row|
+          yield parse_model(row.to_hash)
+        end
+      end
+
+      def parse_model(attr_hash, options={})
+        unprefixed_attr_hash = {}
+
+        attr_hash.each do |key, val|
+          unprefixed_attr_hash[key.gsub(/^#{prefix}/, '')] = val
+        end
+
+        model = self.new(unprefixed_attr_hash)
       end
 
       def parse_models(data, options={})
@@ -75,12 +98,7 @@ module GTFS
 
         models = []
         CSV.parse(data, :headers => true) do |row|
-          attr_hash = {}
-          row.to_hash.each do |key, val|
-            attr_hash[key.gsub(/^#{prefix}/, '')] = val
-          end
-
-          model = self.new(attr_hash)
+          model = parse_model(row.to_hash, options)
           models << model if options[:strict] == false || model.valid?
         end
         models
