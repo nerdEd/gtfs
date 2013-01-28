@@ -68,6 +68,10 @@ module GTFS
           entity.send("parse_#{entity.name}".to_sym, f.read, options)
         end
       end
+
+      define_method "each_#{entity.singular_name}".to_sym do |&block|
+        entity.each(File.join(@tmp_dir, entity.filename)) { |model| block.call model }
+      end
     end
 
     def files
