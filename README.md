@@ -26,6 +26,12 @@ Accessing GTFS data from the source:
     source.shapes
     source.frequencies        
     source.transfers          
+    
+Alternatively:
+
+    source.each_agency {|agency| puts agency}
+    ...
+    source.each_transfer {|transfer| puts transfer}
 
 ### License
 
