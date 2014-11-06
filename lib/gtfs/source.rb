@@ -1,6 +1,6 @@
 require 'tmpdir'
 require 'fileutils'
-require 'zip/zip'
+require 'zip'
 
 module GTFS
   class Source
@@ -34,7 +34,7 @@ module GTFS
     end
 
     def extract_to_cache(source_path)
-      Zip::ZipFile.open(source_path) do |zip|
+      Zip::File.open(source_path) do |zip|
         zip.entries.each do |entry|
           zip.extract(entry.name, File.join(@tmp_dir, '/', entry.name))
         end
