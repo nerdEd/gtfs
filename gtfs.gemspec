@@ -16,9 +16,11 @@ Gem::Specification.new do |gem|
   gem.email       = ['ed@nerded.net']
   gem.homepage    = 'https://github.com/nerdEd/gtfs'
 
+  gem.required_ruby_version = '>= 1.9.2'
+
   gem.add_dependency 'rake'
   gem.add_dependency 'multi_json'
-  gem.add_dependency 'rubyzip'
+  gem.add_dependency 'rubyzip', ['~> 1.1']
 
   gem.add_development_dependency 'rspec', ['>= 2.0.0']
   gem.add_development_dependency 'simplecov'

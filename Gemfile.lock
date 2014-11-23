@@ -28,6 +28,6 @@ DEPENDENCIES
   multi_json (= 1.0.4)
   rake
   rspec
-  rubyzip
+  rubyzip (~> 1.1)
   simplecov
   vcr
