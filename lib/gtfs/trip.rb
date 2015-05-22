@@ -3,7 +3,7 @@ module GTFS
     include GTFS::Model
 
     has_required_attrs :route_id, :service_id, :id
-    has_optional_attrs :headsign, :short_name, :direction_id, :block_id, :shape_id, :wheelchair_accessible
+    has_optional_attrs :headsign, :short_name, :direction_id, :block_id, :shape_id, :wheelchair_accessible, :bikes_allowed
     attr_accessor *attrs
 
     column_prefix :trip_
