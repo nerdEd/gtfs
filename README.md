@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nerdEd/gtfs.svg?branch=master)](https://travis-ci.org/nerdEd/gtfs)
+
 ### GTFS Ruby
 
 A Ruby wrapper for the [General Transit Feed Specification](https://developers.google.com/transit/gtfs/)
