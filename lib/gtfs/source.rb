@@ -7,7 +7,7 @@ module GTFS
 
     ENTITIES = [GTFS::Agency, GTFS::Stop, GTFS::Route, GTFS::Trip, GTFS::StopTime,
                 GTFS::Calendar, GTFS::CalendarDate, GTFS::Shape, GTFS::FareAttribute,
-                GTFS::FareRule, GTFS::Frequency, GTFS::Transfer]
+                GTFS::FareRule, GTFS::Frequency, GTFS::Transfer, GTFS::FeedInfo]
 
     REQUIRED_SOURCE_FILES = ENTITIES.select(&:required_file?).map(&:filename)
     OPTIONAL_SOURCE_FILES = ENTITIES.reject(&:required_file?).map(&:filename)
