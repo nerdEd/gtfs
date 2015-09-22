@@ -77,9 +77,11 @@ module GTFS
         self.define_singleton_method(:filename) {filename}
       end
 
-      def each(filename)
-        CSV.foreach(filename, :headers => true) do |row|
-          yield parse_model(row.to_hash)
+      def each(filename, options={})
+        raise InvalidSourceException.new("File does not exist: #{filename}") unless File.exists?(filename)
+        CSV.foreach(filename, :headers => true, :encoding => 'bom|utf-8') do |row|
+          model = self.new(row.to_hash)
+          yield model if options[:strict] == false || model.valid?
         end
       end
 
@@ -87,11 +89,11 @@ module GTFS
         self.new(attr_hash)
       end
 
+      # Debugging only
       def parse_models(data, options={})
         return [] if data.nil? || data.empty?
-
         models = []
-        CSV.parse(data, :headers => true) do |row|
+        CSV.parse(data, :headers => true, :encoding => 'bom|utf-8') do |row|
           model = parse_model(row.to_hash, options)
           models << model if options[:strict] == false || model.valid?
         end
