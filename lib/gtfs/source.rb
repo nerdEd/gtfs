@@ -53,8 +53,8 @@ module GTFS
     ##### Relationships #####
 
     def pclink(parent, child)
-      @parents[parent] << child
-      @children[child] << parent
+      @parents[child] << parent
+      @children[parent] << child
     end
 
     def parents(entity)
