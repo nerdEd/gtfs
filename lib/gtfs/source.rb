@@ -63,30 +63,30 @@ module GTFS
       @children[entity]
     end
 
-    def each(filename, &block)
-      cls = SOURCE_FILES[filename]
-      cls.each(File.join(@tmp_dir, filename), options, &block)
-    end
-
-    def read(filename)
+    def cache(filename, &block)
+      # Read entities, cache by ID.
       cls = SOURCE_FILES[filename]
       if @cache[cls]
-        return @cache[cls].values
+        @cache[cls].values.each(&block)
+      else
+        @cache[cls] = {}
+        cls.each(File.join(@tmp_dir, filename), options) do |model|
+          @cache[cls][model.id || model] = model
+          block.call model
+        end
       end
-      @cache[cls] = {}
-      self.each(filename) do |model|
-        @cache[cls][model.id || model] = model
-      end
-      @cache[cls].values
     end
 
+    # Define feed.<entities>, feed.each_<entity>, feed.find_<entity>
     ENTITIES.each do |cls|
       define_method cls.name.to_sym do
-        self.read(cls.filename)
+        ret = []
+        self.cache(cls.filename) { |model| ret << model }
+        ret
       end
 
       define_method "each_#{cls.singular_name}".to_sym do |&block|
-        self.each(cls.filename, &block)
+        cls.each(File.join(@tmp_dir, filename), options, &block)
       end
 
       define_method "find_#{cls.singular_name}".to_sym do |key|
