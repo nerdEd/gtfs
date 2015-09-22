@@ -34,21 +34,20 @@ module GTFS
       # Parents/children
       @parents = Hash.new { |h,k| h[k] = Set.new }
       @children = Hash.new { |h,k| h[k] = Set.new }
+      # Trip counter
+      @trip_counter = Hash.new { |h,k| h[k] = 0 }
+      # Merged calendars
+      # ...
+      # Shape lines
+      @shape_lines = {}
       # Temporary directory
       @tmp_dir = Dir.mktmpdir
       ObjectSpace.define_finalizer(self, self.class.finalize(@tmp_dir))
-      # Filename
-      @source = source
-      load_archive(@source)
       # Load options
       @options = DEFAULT_OPTIONS.merge(opts)
-    end
-
-    def load_graph
-      # Cache core entities
-      default_agency = nil
-      self.agencies.each { |e| default_agency = e }
-      self.routes.each { |e| pclink(default_agency, e) }
+      # Unzip to temporary directory
+      @source = source
+      load_archive(@source)
     end
 
     def pclink(parent, child)
@@ -81,17 +80,17 @@ module GTFS
       @cache[cls].values
     end
 
-    ENTITIES.each do |entity|
-      define_method entity.name.to_sym do
-        self.read(entity.filename)
+    ENTITIES.each do |cls|
+      define_method cls.name.to_sym do
+        self.read(cls.filename)
       end
 
-      define_method "each_#{entity.singular_name}".to_sym do |&block|
-        self.each(entity.filename) { |model| block.call model }
+      define_method "each_#{cls.singular_name}".to_sym do |&block|
+        self.each(cls.filename, &block)
       end
 
-      define_method "find_#{entity.singular_name}".to_sym do |key|
-        @cache[entity][key]
+      define_method "find_#{cls.singular_name}".to_sym do |key|
+        @cache[cls][key]
       end
     end
 
