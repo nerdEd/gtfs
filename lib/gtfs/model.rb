@@ -18,6 +18,12 @@ module GTFS
         end
       end
 
+      def id
+      end
+
+      def name
+      end
+
     end
 
     module ClassMethods
