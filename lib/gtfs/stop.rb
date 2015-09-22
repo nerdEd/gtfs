@@ -13,9 +13,5 @@ module GTFS
 
     LOCATION_TYPE_STOP = 0
     LOCATION_TYPE_STATION = 1
-
-    def self.parse_stops(data, options={})
-      return parse_models(data, options)
-    end
   end
 end

@@ -9,9 +9,5 @@ module GTFS
     collection_name :fare_rules
     required_file false
     uses_filename 'fare_rules.txt'
-
-    def self.parse_fare_rules(data, options={})
-      return parse_models(data, options)
-    end
   end
 end

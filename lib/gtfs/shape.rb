@@ -11,9 +11,5 @@ module GTFS
     uses_filename 'shapes.txt'
 
     column_prefix :shape_
-
-    def self.parse_shapes(data, options={})
-      return parse_models(data, options)
-    end
   end
 end

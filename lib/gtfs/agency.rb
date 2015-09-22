@@ -15,9 +15,5 @@ module GTFS
     def id
       self.agency_id
     end
-
-    def self.parse_agencies(data, options={})
-      return parse_models(data, options)
-    end
   end
 end

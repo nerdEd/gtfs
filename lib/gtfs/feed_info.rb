@@ -11,9 +11,5 @@ module GTFS
     collection_name :feed_infos
     required_file false
     uses_filename 'feed_info.txt'
-
-    def self.parse_feed_infos(data, options={})
-      return parse_models(data, options)
-    end
   end
 end

@@ -11,9 +11,5 @@ module GTFS
     collection_name :transfers
     required_file false
     uses_filename 'transfers.txt'
-
-    def self.parse_transfers(data, options={})
-      return parse_models(data, options)
-    end
   end
 end

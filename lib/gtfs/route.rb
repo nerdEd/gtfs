@@ -15,9 +15,5 @@ module GTFS
     def id
       self.route_id
     end
-
-    def self.parse_routes(data, options={})
-      return parse_models(data, options)
-    end
   end
 end
