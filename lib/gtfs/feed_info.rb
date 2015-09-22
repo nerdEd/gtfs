@@ -2,8 +2,8 @@ module GTFS
   class FeedInfo
     include GTFS::Model
 
-    has_required_attrs :publisher_name, :publisher_url, :lang
-    has_optional_attrs :start_date, :end_date, :version
+    has_required_attrs :feed_publisher_name, :feed_publisher_url, :feed_lang
+    has_optional_attrs :feed_start_date, :feed_end_date, :feed_version
     attr_accessor *attrs
 
     column_prefix :feed_

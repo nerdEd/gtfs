@@ -84,13 +84,7 @@ module GTFS
       end
 
       def parse_model(attr_hash, options={})
-        unprefixed_attr_hash = {}
-
-        attr_hash.each do |key, val|
-          unprefixed_attr_hash[key.gsub(/^#{prefix}/, '')] = val
-        end
-
-        model = self.new(unprefixed_attr_hash)
+        self.new(attr_hash)
       end
 
       def parse_models(data, options={})
