@@ -52,7 +52,6 @@ module GTFS
     end
 
     def pclink(parent, child)
-      puts "pclink: #{parent.id} -> #{child.id}"
       @parents[parent] << child
       @children[child] << parent
     end
