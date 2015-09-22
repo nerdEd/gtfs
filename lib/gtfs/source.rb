@@ -89,6 +89,10 @@ module GTFS
       define_method "each_#{entity.singular_name}".to_sym do |&block|
         self.each(entity.filename) { |model| block.call model }
       end
+
+      define_method "find_#{entity.singular_name}".to_sym do |key|
+        @cache[entity][key]
+      end
     end
 
     private
