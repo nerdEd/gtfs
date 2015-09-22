@@ -86,7 +86,7 @@ module GTFS
       end
 
       define_method "each_#{cls.singular_name}".to_sym do |&block|
-        cls.each(File.join(@tmp_dir, filename), options, &block)
+        cls.each(File.join(@tmp_dir, cls.filename), options, &block)
       end
 
       define_method "find_#{cls.singular_name}".to_sym do |key|
