@@ -17,6 +17,7 @@ module GTFS
           instance_variable_set("@#{key}", val)
         end
       end
+
     end
 
     module ClassMethods
@@ -71,13 +72,9 @@ module GTFS
       def each(filename, options={})
         raise InvalidSourceException.new("File does not exist: #{filename}") unless File.exists?(filename)
         CSV.foreach(filename, :headers => true, :encoding => 'bom|utf-8') do |row|
-          model = self.new(row.to_hash)
+          model = self.new(attr_hash)
           yield model if options[:strict] == false || model.valid?
         end
-      end
-
-      def parse_model(attr_hash, options={})
-        self.new(attr_hash)
       end
 
       # Debugging only
@@ -85,7 +82,7 @@ module GTFS
         return [] if data.nil? || data.empty?
         models = []
         CSV.parse(data, :headers => true, :encoding => 'bom|utf-8') do |row|
-          model = parse_model(row.to_hash, options)
+          model = self.new(attr_hash)
           models << model if options[:strict] == false || model.valid?
         end
         models
