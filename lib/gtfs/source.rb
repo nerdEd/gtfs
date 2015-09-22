@@ -44,13 +44,6 @@ module GTFS
       @options = DEFAULT_OPTIONS.merge(opts)
     end
 
-    def load_graph
-      # Cache core entities
-      default_agency = nil
-      self.agencies.each { |e| default_agency = e }
-      self.routes.each { |e| pclink(default_agency, e) }
-    end
-
     def pclink(parent, child)
       puts "pclink: #{parent.id} -> #{child.id}"
       @parents[parent] << child
@@ -98,6 +91,14 @@ module GTFS
       proc {FileUtils.rm_rf(directory)}
     end
 
+    def self.build(data_root, opts={})
+      if File.exists?(data_root)
+        src = LocalSource.new(data_root, opts)
+      else
+        src = URLSource.new(data_root, opts)
+      end
+    end
+
     def extract_to_cache(source_path)
       Zip::File.open(source_path) do |zip|
         zip.entries.each do |entry|
@@ -108,14 +109,6 @@ module GTFS
 
     def load_archive(source)
       raise 'Cannot directly instantiate base GTFS::Source'
-    end
-
-    def self.build(data_root, opts={})
-      if File.exists?(data_root)
-        src = LocalSource.new(data_root, opts)
-      else
-        src = URLSource.new(data_root, opts)
-      end
     end
 
     def entries
