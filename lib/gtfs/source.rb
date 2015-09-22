@@ -50,6 +50,8 @@ module GTFS
       load_archive(@source)
     end
 
+    ##### Relationships #####
+
     def pclink(parent, child)
       @parents[parent] << child
       @children[child] << parent
@@ -62,6 +64,8 @@ module GTFS
     def children(entity)
       @children[entity]
     end
+
+    ##### Cache #####
 
     def cache(filename, &block)
       # Read entities, cache by ID.
@@ -76,6 +80,8 @@ module GTFS
         end
       end
     end
+
+    ##### Access methods #####
 
     # Define feed.<entities>, feed.each_<entity>, feed.find_<entity>
     ENTITIES.each do |cls|
@@ -92,6 +98,65 @@ module GTFS
       define_method "find_#{cls.singular_name}".to_sym do |key|
         @cache[cls][key]
       end
+    end
+
+    ##### Load graph, shapes, calendars, etc. #####
+
+    def load_graph
+      # Clear
+      @cache.clear
+      @parents.clear
+      @children.clear
+      @trip_counter.clear
+      # Cache core entities
+      default_agency = nil
+      self.agencies.each { |e| default_agency = e }
+      self.routes.each { |e| self.pclink(self.find_agency(e.agency_id) || default_agency, e) }
+      self.trips.each { |e| self.pclink(self.find_route(e.route_id), e)}
+      # Link trips to stops
+      self.stops.each {}
+      self.each_stop_time do |e|
+        trip = self.find_trip(e.trip_id)
+        stop = self.find_stop(e.stop_id)
+        self.pclink(trip, stop)
+        @trip_counter[trip] += 1
+      end
+    end
+
+    def load_shapes
+      # Merge shapes
+      @shape_lines.clear
+      shapes_merge = Hash.new { |h,k| h[k] = [] }
+      self.each_shape { |e| shapes_merge[e.shape_id] << e }
+      shapes_merge.each do |k,v|
+        @shape_lines[k] = v
+          .sort_by { |i| i.shape_pt_sequence.to_i }
+          .map { |i| [i.shape_pt_lon.to_f, i.shape_pt_lat.to_f] }
+      end
+    end
+
+    def load_calendar
+      # Merge calendar and calendar_dates
+    end
+
+    ##### Incremental processing #####
+
+    def trip_chunks(batchsize=1_000_000)
+      # Return chunks of trips containing approx. batchsize stop_times.
+      # Reverse sort trips
+      trips = @trip_counter.sort_by { |k,v| -v }
+      chunk = []
+      current = 0
+      trips.each do |k,v|
+        if (current + v) > batchsize
+          yield chunk
+          chunk = []
+          current = 0
+        end
+        chunk << k
+        current += v
+      end
+      yield chunk
     end
 
     private
