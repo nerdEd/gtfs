@@ -78,7 +78,7 @@ module GTFS
       def each(filename, options={})
         raise InvalidSourceException.new("File does not exist: #{filename}") unless File.exists?(filename)
         CSV.foreach(filename, :headers => true, :encoding => 'bom|utf-8') do |row|
-          model = self.new(attr_hash)
+          model = self.new(row.to_hash)
           yield model if options[:strict] == false || model.valid?
         end
       end
@@ -88,7 +88,7 @@ module GTFS
         return [] if data.nil? || data.empty?
         models = []
         CSV.parse(data, :headers => true, :encoding => 'bom|utf-8') do |row|
-          model = self.new(attr_hash)
+          model = self.new(row.to_hash)
           models << model if options[:strict] == false || model.valid?
         end
         models
