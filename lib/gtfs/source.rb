@@ -44,6 +44,13 @@ module GTFS
       @options = DEFAULT_OPTIONS.merge(opts)
     end
 
+    def load_graph
+      # Cache core entities
+      default_agency = nil
+      self.agencies.each { |e| default_agency = e }
+      self.routes.each { |e| pclink(default_agency, e) }
+    end
+
     def pclink(parent, child)
       puts "pclink: #{parent.id} -> #{child.id}"
       @parents[parent] << child
@@ -113,11 +120,6 @@ module GTFS
 
     def entries
       Dir.entries(@tmp_dir)
-    end
-
-    def raise_if_missing_source(filename)
-      file_missing = !entries.include?(filename)
-      raise InvalidSourceException.new("Missing required source file: #{filename}") if file_missing
     end
 
     def parse_file(filename)
