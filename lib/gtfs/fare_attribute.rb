@@ -9,5 +9,9 @@ module GTFS
     collection_name :fare_attributes
     required_file false
     uses_filename 'fare_attributes.txt'
+
+    def id
+      self.fare_id
+    end
   end
 end

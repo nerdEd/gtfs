@@ -8,5 +8,9 @@ module GTFS
     collection_name :calendars
     required_file true
     uses_filename 'calendar.txt'
+
+    def id
+      self.service_id
+    end
   end
 end

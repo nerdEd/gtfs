@@ -12,5 +12,9 @@ module GTFS
 
     LOCATION_TYPE_STOP = 0
     LOCATION_TYPE_STATION = 1
+
+    def id
+      self.stop_id
+    end
   end
 end

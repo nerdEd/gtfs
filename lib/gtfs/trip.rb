@@ -9,5 +9,9 @@ module GTFS
     collection_name :trips
     required_file true
     uses_filename 'trips.txt'
+
+    def id
+      self.trip_id
+    end
   end
 end
