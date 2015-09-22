@@ -6,8 +6,6 @@ module GTFS
     has_optional_attrs :feed_start_date, :feed_end_date, :feed_version
     attr_accessor *attrs
 
-    column_prefix :feed_
-
     collection_name :feed_infos
     required_file false
     uses_filename 'feed_info.txt'

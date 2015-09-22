@@ -5,7 +5,6 @@ module GTFS
     def self.included(base)
       base.extend ClassMethods
 
-      base.class_variable_set('@@prefix', '')
       base.class_variable_set('@@optional_attrs', [])
       base.class_variable_set('@@required_attrs', [])
 
@@ -25,10 +24,6 @@ module GTFS
       #####################################
       # Getters for class variables
       #####################################
-
-      def prefix
-        self.class_variable_get('@@prefix')
-      end
 
       def optional_attrs
         self.class_variable_get('@@optional_attrs')
@@ -52,10 +47,6 @@ module GTFS
 
       def has_optional_attrs(*attrs)
         self.class_variable_set('@@optional_attrs', attrs)
-      end
-
-      def column_prefix(prefix)
-        self.class_variable_set('@@prefix', prefix)
       end
 
       def required_file(required)

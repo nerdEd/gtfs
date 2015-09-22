@@ -6,8 +6,6 @@ module GTFS
     has_optional_attrs :min_transfer_time
     attr_accessor *attrs
 
-    column_prefix :transfer_
-
     collection_name :transfers
     required_file false
     uses_filename 'transfers.txt'

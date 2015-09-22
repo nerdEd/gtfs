@@ -6,8 +6,6 @@ module GTFS
     has_optional_attrs :trip_headsign, :trip_short_name, :direction_id, :block_id, :shape_id, :wheelchair_accessible
     attr_accessor *attrs
 
-    column_prefix :trip_
-
     collection_name :trips
     required_file true
     uses_filename 'trips.txt'

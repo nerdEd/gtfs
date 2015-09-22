@@ -9,7 +9,5 @@ module GTFS
     collection_name :shapes
     required_file false
     uses_filename 'shapes.txt'
-
-    column_prefix :shape_
   end
 end

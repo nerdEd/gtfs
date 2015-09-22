@@ -4,7 +4,6 @@ module GTFS
 
     has_required_attrs :stop_id, :stop_name, :stop_lat, :stop_lon
     has_optional_attrs :stop_code, :stop_desc, :zone_id, :stop_url, :location_type, :parent_station, :stop_timezone, :wheelchair_boarding
-    column_prefix :stop_
     attr_accessor *attrs
 
     collection_name :stops

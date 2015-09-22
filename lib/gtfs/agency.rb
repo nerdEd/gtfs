@@ -6,8 +6,6 @@ module GTFS
     has_optional_attrs :agency_id, :agency_lang, :agency_phone, :agency_fare_url
     attr_accessor *attrs
 
-    column_prefix :agency_
-
     collection_name :agencies
     required_file true
     uses_filename 'agency.txt'
