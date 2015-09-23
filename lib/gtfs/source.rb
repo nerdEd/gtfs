@@ -83,7 +83,7 @@ module GTFS
 
     ##### Access methods #####
 
-    # Define feed.<entities>, feed.each_<entity>, feed.find_<entity>
+    # Define feed.<entities>, feed.each_<entity>, feed.<entity>
     ENTITIES.each do |cls|
       define_method cls.name.to_sym do
         ret = []
@@ -91,13 +91,14 @@ module GTFS
         ret
       end
 
+      define_method cls.singular_name.to_sym do |key|
+        @cache[cls][key]
+      end
+
       define_method "each_#{cls.singular_name}".to_sym do |&block|
         cls.each(File.join(@tmp_dir, cls.filename), options, &block)
       end
 
-      define_method "find_#{cls.singular_name}".to_sym do |key|
-        @cache[cls][key]
-      end
     end
 
     def shape_line(shape_id)
@@ -116,13 +117,13 @@ module GTFS
       # Cache core entities
       default_agency = nil
       self.agencies.each { |e| default_agency = e }
-      self.routes.each { |e| self.pclink(self.find_agency(e.agency_id) || default_agency, e) }
-      self.trips.each { |e| self.pclink(self.find_route(e.route_id), e)}
+      self.routes.each { |e| self.pclink(self.agency(e.agency_id) || default_agency, e) }
+      self.trips.each { |e| self.pclink(self.route(e.route_id), e)}
       # Link trips to stops
       self.stops.each {}
       self.each_stop_time do |e|
-        trip = self.find_trip(e.trip_id)
-        stop = self.find_stop(e.stop_id)
+        trip = self.trip(e.trip_id)
+        stop = self.stop(e.stop_id)
         self.pclink(trip, stop)
         @trip_counter[trip] += 1
       end
