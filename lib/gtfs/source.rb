@@ -100,6 +100,11 @@ module GTFS
       end
     end
 
+    def shape_line(shape_id)
+      self.load_shapes if @shape_lines.empty?
+      @shape_lines[shape_id]
+    end
+
     ##### Load graph, shapes, calendars, etc. #####
 
     def load_graph
