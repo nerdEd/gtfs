@@ -37,7 +37,7 @@ Alternatively:
 
 This fork extends [nerdEd/gtfs](https://github.com/nerdEd/gtfs) with a number
 of additional features used by Transitland. In some ways, however, it is also
-breaks some compatibility; mainly, entity attribute names are now taken
+breaks compatibility; mainly, entity attribute names are now taken
 directly from the GTFS spec without removing "prefixes", e.g. `stop.stop_timezone`
 instead of `stop.timezone`
 
