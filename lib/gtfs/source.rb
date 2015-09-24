@@ -166,7 +166,7 @@ module GTFS
       @service_periods.values.each(&:expand_service_range)
     end
 
-    ##### Incremental processing #####
+  ##### Incremental processing #####
 
     def trip_chunks(batchsize=1_000_000)
       # Return chunks of trips containing approx. batchsize stop_times.
@@ -184,6 +184,32 @@ module GTFS
         current += v
       end
       yield chunk
+    end
+
+    def stop_time_pairs(trips=nil)
+      # Return all the stop time pairs for a set of trips.
+      # Trip IDs
+      trips ||= self.trips
+      trip_ids = Set.new trips.map(&:id)
+      # Subgraph mapping trip IDs to stop_times
+      trip_ids_stop_times = Hash.new {|h,k| h[k] = []}
+      self.each_stop_time do |stop_time|
+        next unless trip_ids.include?(stop_time.trip_id)
+        trip_ids_stop_times[stop_time.trip_id] << stop_time
+      end
+      # Process each trip
+      trip_ids_stop_times.each do |trip_id, stop_times|
+        # Get trip and route entities
+        trip = self.trip(trip_id)
+        route = self.route(trip.route_id)
+        # Sort stop_times by stop_sequence
+        stop_times = stop_times.sort_by { |stop| stop.stop_sequence.to_i }
+        # Zip edges
+        stop_times[0..-2].zip(stop_times[1..-1]).each do |origin,destination|
+          # Yield edge
+          yield route, trip, origin, destination
+        end
+      end
     end
 
     private
@@ -222,6 +248,5 @@ module GTFS
         files[filename] ||= yield f
       end
     end
-
   end
 end
