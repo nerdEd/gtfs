@@ -37,7 +37,7 @@ module GTFS
       # Trip counter
       @trip_counter = Hash.new { |h,k| h[k] = 0 }
       # Merged calendars
-      # ...
+      @service_periods = {}
       # Shape lines
       @shape_lines = {}
       # Temporary directory
@@ -106,6 +106,11 @@ module GTFS
       @shape_lines[shape_id]
     end
 
+    def service_period(service_id)
+      self.load_service_periods if @service_periods.empty?
+      @service_periods[service_id]
+    end
+
     ##### Load graph, shapes, calendars, etc. #####
 
     def load_graph
@@ -141,8 +146,24 @@ module GTFS
       end
     end
 
-    def load_calendar
-      # Merge calendar and calendar_dates
+    def load_service_periods
+      @service_periods.clear
+      # Load calendar
+      self.each_calendar do |e|
+        service_period = ServicePeriod.from_calendar(e)
+        @service_periods[service_period.id] = service_period
+      end
+      # Load calendar_date exceptions
+      self.each_calendar_date do |e|
+        service_period = @service_periods[e.service_id] || ServicePeriod.new
+        if e.exception_type.to_i == 1
+          service_period.add_date(e.date)
+        else
+          service_period.except_date(e.date)
+        end
+      end
+      # Adjust all service ranges
+      @service_periods.values.each(&:expand_service_range)
     end
 
     ##### Incremental processing #####
