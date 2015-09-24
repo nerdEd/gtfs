@@ -6,7 +6,7 @@ A Ruby wrapper for the [General Transit Feed Specification](https://developers.g
 
 Initialize a new GTFS source:
 
-    # Defaults to unstrict checking of required columns
+    # Defaults to strict checking of required columns
     source = GTFS::Source.build(<URI or Path to GTFS zip file>)
 
     # Relax the column checks, useful for sources that don't conform to standard
