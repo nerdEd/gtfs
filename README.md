@@ -9,8 +9,8 @@ Initialize a new GTFS source:
     # Defaults to unstrict checking of required columns
     source = GTFS::Source.build(<URI or Path to GTFS zip file>)
 
-    # Use strict parsing
-    source = GTFS::Source.build(<URI or Path to GTFS zip file>, {strict: true})
+    # Relax the column checks, useful for sources that don't conform to standard
+    source = GTFS::Source.build(<URI or Path to GTFS zip file>, {strict: false})
 
 Accessing GTFS data from the source:
 
@@ -37,7 +37,7 @@ Alternatively:
 
 This fork extends [nerdEd/gtfs](https://github.com/nerdEd/gtfs) with a number
 of additional features used by Transitland. In some ways, however, it is also
-breaks backwards compatibility; mainly, entity attribute names are now taken
+breaks some compatibility; mainly, entity attribute names are now taken
 directly from the GTFS spec without removing "prefixes", e.g. `stop.stop_timezone`
 instead of `stop.timezone`
 

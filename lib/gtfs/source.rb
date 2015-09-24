@@ -23,7 +23,7 @@ module GTFS
     REQUIRED_SOURCE_FILES = ENTITIES.select(&:required_file?).map(&:filename)
     OPTIONAL_SOURCE_FILES = ENTITIES.reject(&:required_file?).map(&:filename)
     SOURCE_FILES = Hash[ENTITIES.map { |e| [e.filename, e] }]
-    DEFAULT_OPTIONS = {strict: false}
+    DEFAULT_OPTIONS = {strict: true}
 
     attr_accessor :source, :archive, :options
 
