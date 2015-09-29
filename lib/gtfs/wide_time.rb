@@ -9,12 +9,17 @@ module GTFS
         t
       elsif t.is_a?(Fixnum)
         self.new(t)
+      elsif t.nil?
+        nil
+      elsif t.empty?
+        nil
       else
         self.from_string(t)
       end
     end
 
     def self.from_string(t)
+      raise ArgumentError.new('Cannot parse empty string') if t.empty?
       t = t.split(':')
       hours = t[0].to_i
       minutes = t[1].to_i

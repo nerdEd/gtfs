@@ -39,9 +39,10 @@ module GTFS
       self.new(attrs)
     end
 
-    def initialize(attrs)
+    def initialize(attrs=nil)
       @added_dates = Set.new
       @except_dates = Set.new
+      attrs ||= {}
       attrs.each do |key, val|
         instance_variable_set("@#{key}", val)
       end
