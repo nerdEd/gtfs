@@ -155,15 +155,13 @@ module GTFS
       end
       # Load calendar_date exceptions
       self.each_calendar_date do |e|
-        service_period = @service_periods[e.service_id] || ServicePeriod.new
+        service_period = @service_periods[e.service_id] || ServicePeriod.new(service_id: e.service_id)
         if e.exception_type.to_i == 1
           service_period.add_date(e.date)
         else
           service_period.except_date(e.date)
         end
       end
-      # Adjust all service ranges
-      @service_periods.values.each(&:expand_service_range)
     end
 
   ##### Incremental processing #####
