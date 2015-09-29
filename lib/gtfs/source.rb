@@ -186,7 +186,7 @@ module GTFS
       yield chunk
     end
 
-    def stop_time_pairs(trips=nil)
+    def trip_stop_times(trips=nil)
       # Return all the stop time pairs for a set of trips.
       # Trip IDs
       trips ||= self.trips
@@ -198,15 +198,17 @@ module GTFS
         trip_ids_stop_times[stop_time.trip_id] << stop_time
       end
       # Process each trip
-      trip_ids_stop_times.each do |trip_id, stop_times|
-        # Get trip and route entities
-        trip = self.trip(trip_id)
+      trips.each do |trip|
+        stop_times = trip_ids_stop_times[trip.trip_id]
+        stop_times = stop_times.sort_by { |st| st.stop_sequence.to_i }
+        yield trip, stop_times
+      end
+    end
+
+    def stop_time_pairs(trips=nil)
+      self.trip_stop_times(trips) do |trip,stop_times|
         route = self.route(trip.route_id)
-        # Sort stop_times by stop_sequence
-        stop_times = stop_times.sort_by { |stop| stop.stop_sequence.to_i }
-        # Zip edges
         stop_times[0..-2].zip(stop_times[1..-1]).each do |origin,destination|
-          # Yield edge
           yield route, trip, origin, destination
         end
       end
