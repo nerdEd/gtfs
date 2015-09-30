@@ -161,6 +161,7 @@ module GTFS
         else
           service_period.except_date(e.date)
         end
+        @service_periods[service_period.id] = service_period
       end
     end
 
