@@ -53,7 +53,8 @@ module GTFS
     end
 
     def iso_service_weekdays
-      ISO_DAYS_OF_WEEK.map { |i| (self.send(i)) }
+      # Export as a true/false boolean, not true/false/nil.
+      ISO_DAYS_OF_WEEK.map { |i| self.send(i) == true }
     end
 
     def add_date(date)
