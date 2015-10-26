@@ -163,6 +163,8 @@ module GTFS
         end
         @service_periods[service_period.id] = service_period
       end
+      # Expand service range
+      @service_periods.values.each(&:expand_service_range)
     end
 
   ##### Incremental processing #####
