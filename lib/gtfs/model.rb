@@ -1,4 +1,4 @@
-require 'csv'
+require 'rcsv'
 
 module GTFS
   module Model
@@ -77,9 +77,11 @@ module GTFS
 
       def each(filename, options={})
         raise InvalidSourceException.new("File does not exist: #{filename}") unless File.exists?(filename)
-        CSV.foreach(filename, :headers => true, :encoding => 'bom|utf-8') do |row|
-          model = self.new(row.to_hash)
-          yield model if options[:strict] == false || model.valid?
+        File.open(filename, encoding: 'bom|utf-8') do |f|
+          Rcsv.parse(f, nostrict: true, columns: {}, header: :use, row_as_hash: true) do |row|
+            model = self.new(row)
+            yield model if options[:strict] == false || model.valid?
+          end
         end
       end
 
@@ -87,7 +89,7 @@ module GTFS
       def parse_models(data, options={})
         return [] if data.nil? || data.empty?
         models = []
-        CSV.parse(data, :headers => true, :encoding => 'bom|utf-8') do |row|
+        Rcsv.parse(data, nostrict: true, columns: {}, header: :use, row_as_hash: true) do |row|
           model = self.new(row.to_hash)
           models << model if options[:strict] == false || model.valid?
         end
