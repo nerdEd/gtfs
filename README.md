@@ -1,19 +1,17 @@
-[![Build Status](https://travis-ci.org/nerdEd/gtfs.svg?branch=master)](https://travis-ci.org/nerdEd/gtfs)
-
-### GTFS Ruby
+## GTFS Ruby
 
 A Ruby wrapper for the [General Transit Feed Specification](https://developers.google.com/transit/gtfs/)
 
-### Getting started
+## Getting started
 
 Initialize a new GTFS source:
 
     # Defaults to strict checking of required columns
     source = GTFS::Source.build(<URI or Path to GTFS zip file>)
-    
+
     # Relax the column checks, useful for sources that don't conform to standard
     source = GTFS::Source.build(<URI or Path to GTFS zip file>, {strict: false})
-    
+
 Accessing GTFS data from the source:
 
     source.agencies
@@ -28,30 +26,38 @@ Accessing GTFS data from the source:
     source.shapes
     source.frequencies        
     source.transfers          
-    
+
 Alternatively:
 
     source.each_agency {|agency| puts agency}
     ...
     source.each_transfer {|transfer| puts transfer}
 
-### License
+## Differences with nerdEd/gtfs
 
-Copyright (C) 2012 Ed Schmalzle
+This fork extends [nerdEd/gtfs](https://github.com/nerdEd/gtfs) with a number
+of additional features used by Transitland. In some ways, however, it is also
+breaks compatibility; mainly, entity attribute names are now taken
+directly from the GTFS spec without removing "prefixes", e.g. `stop.stop_timezone`
+instead of `stop.timezone`
 
-Permission is hereby granted, free of charge, to any person obtaining a 
-copy of this software and associated documentation files (the "Software"), to 
-deal in the Software without restriction, including without limitation the 
-rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-copies of the Software, and to permit persons to whom the Software is furnished 
+## License
+
+Copyright (C) 2012 Ed Schmalzle, with contributions 2015 Ian Rees
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is furnished
 to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in 
+The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS 
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER 
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

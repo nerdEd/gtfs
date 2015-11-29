@@ -1,10 +1,9 @@
 module GTFS
-  class Stop 
+  class Stop
     include GTFS::Model
-    
-    has_required_attrs :id, :name, :lat, :lon
-    has_optional_attrs :code, :desc, :zone_id, :url, :location_type, :parent_station, :timezone, :wheelchair_boarding
-    column_prefix :stop_
+
+    has_required_attrs :stop_id, :stop_name, :stop_lat, :stop_lon
+    has_optional_attrs :stop_code, :stop_desc, :zone_id, :stop_url, :location_type, :parent_station, :stop_timezone, :wheelchair_boarding
     attr_accessor *attrs
 
     collection_name :stops
@@ -14,9 +13,8 @@ module GTFS
     LOCATION_TYPE_STOP = 0
     LOCATION_TYPE_STATION = 1
 
-    def self.parse_stops(data, options={})
-      return parse_models(data, options)
+    def id
+      self.stop_id
     end
   end
 end
-
