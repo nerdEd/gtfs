@@ -9,9 +9,5 @@ module GTFS
     collection_name :frequencies
     required_file false
     uses_filename 'frequencies.txt'
-
-    def self.parse_frequencies(data, options={})
-      return parse_models(data, options)
-    end
   end
 end
