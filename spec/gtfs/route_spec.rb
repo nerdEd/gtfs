@@ -11,4 +11,23 @@ describe GTFS::Route do
 
     include_examples 'models'
   end
+
+  context 'GTFS::Route.gtfs_vehicle_type' do
+    it 'returns vehicle_type from string' do
+      route = GTFS::Route.new({route_type: '0'})
+      route.gtfs_vehicle_type.should eq(:Tram)
+    end
+    it 'returns vehicle_type from symbol' do
+      route = GTFS::Route.new({route_type: :'0'})
+      route.gtfs_vehicle_type.should eq(:Tram)
+    end
+    it 'returns vehicle_type from integer' do
+      route = GTFS::Route.new({route_type: 0})
+      route.gtfs_vehicle_type.should eq(:Tram)
+    end
+    it 'supports extended vehicle_types' do
+      route = GTFS::Route.new({route_type: 100})
+      route.gtfs_vehicle_type.should eq(:'Railway Service')
+    end
+  end
 end
