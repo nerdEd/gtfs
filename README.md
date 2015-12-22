@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/transitland/gtfs.svg?style=svg)](https://circleci.com/gh/transitland/gtfs)
+
 ## GTFS Ruby
 
 A Ruby wrapper for the [General Transit Feed Specification](https://developers.google.com/transit/gtfs/)
