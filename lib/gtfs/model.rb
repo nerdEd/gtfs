@@ -78,27 +78,29 @@ module GTFS
       end
 
       def each(filename)
+        headers = nil
         CSV.foreach(filename, :headers => true) do |row|
-          yield parse_model(row.to_hash)
+          headers ||= unprefixed_headers(row.headers)
+          yield parse_model(headers, row.fields)
         end
       end
 
-      def parse_model(attr_hash, options={})
-        unprefixed_attr_hash = {}
+      def unprefixed_headers(headers)
+        headers.map{|h| h.gsub(/^#{prefix}/, '')}
+      end
 
-        attr_hash.each do |key, val|
-          unprefixed_attr_hash[key.gsub(/^#{prefix}/, '')] = val
-        end
-
-        model = self.new(unprefixed_attr_hash)
+      def parse_model(headers, fields, options={})
+        self.new(Hash[headers.zip(fields)])
       end
 
       def parse_models(data, options={})
         return [] if data.nil? || data.empty?
 
         models = []
+        headers = nil
         CSV.parse(data, :headers => true) do |row|
-          model = parse_model(row.to_hash, options)
+          headers ||= unprefixed_headers(row.headers)
+          model = parse_model(headers, row.fields)
           models << model if options[:strict] == false || model.valid?
         end
         models
