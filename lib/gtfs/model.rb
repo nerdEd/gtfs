@@ -77,8 +77,8 @@ module GTFS
         self.define_singleton_method(:filename) {filename}
       end
 
-      def each(filename)
-        CSV.foreach(filename, :headers => true) do |row|
+      def each(filename, options)
+        CSV.foreach(filename, :headers => true, :encoding => options[:encoding]) do |row|
           yield parse_model(row.to_hash)
         end
       end
