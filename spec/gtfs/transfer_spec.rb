@@ -14,7 +14,7 @@ describe GTFS::Transfer do
 
   describe 'Transfer.generate_transfers' do
     it "should produce the correct csv output" do
-      csv = GTFS::Transfer.generate_transfers do |transfers|
+      csv = GTFS::Transfer.generate_csv do |transfers|
         transfers << {
           from_stop_id: 'S6',
           to_stop_id: 'S7',
@@ -27,7 +27,7 @@ describe GTFS::Transfer do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::Transfer.generate_transfers do |transfers|
+      csv = GTFS::Transfer.generate_csv do |transfers|
         transfers << {
           from_stop_id: 'S6',
           to_stop_id: 'S7',

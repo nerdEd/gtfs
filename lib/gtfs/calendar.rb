@@ -12,9 +12,5 @@ module GTFS
     def self.parse_calendars(data, options={})
       return parse_models(data, options)
     end
-
-    def self.generate_calendars(&block)
-      generate_csv &block
-    end
   end
 end

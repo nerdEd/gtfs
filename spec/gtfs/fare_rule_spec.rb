@@ -15,7 +15,7 @@ describe GTFS::FareRule do
   # has_optional_attrs :route_id, :origin_id, :destination_id, :contains_id
   describe 'FareRules.write_fare_rules' do
     it "should produce the correct csv output" do
-      csv = GTFS::FareRule.generate_fare_rules do |fare_rules|
+      csv = GTFS::FareRule.generate_csv do |fare_rules|
         fare_rules << {
           fare_id: 'a',
           route_id: 'TSW',
@@ -37,7 +37,7 @@ describe GTFS::FareRule do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::FareRule.generate_fare_rules do |fare_rules|
+      csv = GTFS::FareRule.generate_csv do |fare_rules|
         fare_rules << {
           fare_id: 'a',
           destination_id: 1,

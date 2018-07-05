@@ -91,11 +91,15 @@ module GTFS
         models
       end
 
+      def new_write_collection
+        WriteCollection.new(self)
+      end
+
       def generate_csv(&block)
         CSV.generate do |csv|
-          c = WriteCollection.new(csv, self)
+          c = WriteCollection.new(self)
           yield c
-          c.array_to_csv
+          c.array_to_csv csv
         end
       end
     end

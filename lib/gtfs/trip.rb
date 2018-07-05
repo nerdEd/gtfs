@@ -16,9 +16,5 @@ module GTFS
     def self.parse_trips(data, options={})
       return parse_models(data, options)
     end
-
-    def self.generate_trips(&block)
-      generate_csv &block
-    end
   end
 end

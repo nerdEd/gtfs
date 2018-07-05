@@ -14,7 +14,7 @@ describe GTFS::Frequency do
 
   describe 'Frequency.generate_frequencies' do
     it "should produce the correct csv output" do
-      csv = GTFS::Frequency.generate_frequencies do |frequencies|
+      csv = GTFS::Frequency.generate_csv do |frequencies|
         frequencies << {
           trip_id: 'AWE1',
           start_time: '05:30:00',
@@ -28,7 +28,7 @@ describe GTFS::Frequency do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::Frequency.generate_frequencies do |frequencies|
+      csv = GTFS::Frequency.generate_csv do |frequencies|
         frequencies << {
           trip_id: 'AWE1',
           start_time: '05:30:00',

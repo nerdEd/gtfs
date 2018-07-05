@@ -14,7 +14,7 @@ describe GTFS::Stop do
 
   describe 'Stop.generate_stops' do
     it "should produce the correct csv output" do
-      csv = GTFS::Stop.generate_stops do |stops|
+      csv = GTFS::Stop.generate_csv do |stops|
         stops << {
           id: 'S1',
           name: 'Mission St. & Silver Ave.',
@@ -31,7 +31,7 @@ describe GTFS::Stop do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::Stop.generate_stops do |stops|
+      csv = GTFS::Stop.generate_csv do |stops|
         stops << {
           id: 'S1',
           name: 'Mission St. & Silver Ave.',

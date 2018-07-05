@@ -14,7 +14,7 @@ describe GTFS::Route do
 
   describe 'Route.generate_routes' do
     it "should produce the correct csv output" do
-      csv = GTFS::Route.generate_routes do |routes|
+      csv = GTFS::Route.generate_csv do |routes|
         routes << {
           id: 'A',
           short_name: '17',
@@ -29,7 +29,7 @@ describe GTFS::Route do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::Route.generate_routes do |routes|
+      csv = GTFS::Route.generate_csv do |routes|
         routes << {
           id: 'A',
           short_name: '17',

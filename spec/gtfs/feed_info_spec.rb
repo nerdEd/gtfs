@@ -14,7 +14,7 @@ describe GTFS::FeedInfo do
 
   describe 'FeedInfo.generate_feed_infos' do
     it "should produce the correct csv output" do
-      csv = GTFS::FeedInfo.generate_feed_infos do |feed_infos|
+      csv = GTFS::FeedInfo.generate_csv do |feed_infos|
         feed_infos << {
           publisher_name: 'P',
           publisher_url: 'http://feed.test/test',
@@ -28,7 +28,7 @@ describe GTFS::FeedInfo do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::FeedInfo.generate_feed_infos do |feed_infos|
+      csv = GTFS::FeedInfo.generate_csv do |feed_infos|
         feed_infos << {
           publisher_name: 'P',
           publisher_url: 'http://feed.test/test',

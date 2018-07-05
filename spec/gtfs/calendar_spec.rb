@@ -14,7 +14,7 @@ describe GTFS::Calendar do
   #    has_attributes :service_id, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, :start_date, :end_date
   describe 'Calendar.write_calendars' do
     it "should produce the correct csv output" do
-      csv = GTFS::Calendar.generate_calendars do |calendars|
+      csv = GTFS::Calendar.generate_csv do |calendars|
         calendars << {
           service_id: 'WE',
           monday: 0,

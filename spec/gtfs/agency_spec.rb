@@ -14,7 +14,7 @@ describe GTFS::Agency do
 
   describe 'Agency.generate_agencies' do
     it "should produce the correct csv output" do
-      csv = GTFS::Agency.generate_agencies do |agencies|
+      csv = GTFS::Agency.generate_csv do |agencies|
         agencies << {
           id: 1,
           name: 'Maryland Transit Administration',
@@ -29,7 +29,7 @@ describe GTFS::Agency do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::Agency.generate_agencies do |agencies|
+      csv = GTFS::Agency.generate_csv do |agencies|
         agencies << {
           name: 'Maryland Transit Administration',
           url: 'http://www.mta.maryland.gov',

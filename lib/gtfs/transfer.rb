@@ -16,9 +16,5 @@ module GTFS
     def self.parse_transfers(data, options={})
       return parse_models(data, options)
     end
-
-    def self.generate_transfers(&block)
-      generate_csv &block
-    end
   end
 end

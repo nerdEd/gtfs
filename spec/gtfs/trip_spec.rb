@@ -14,7 +14,7 @@ describe GTFS::Trip do
 
   describe 'Trip.generate_trips' do
     it "should produce the correct csv output" do
-      csv = GTFS::Trip.generate_trips do |trips|
+      csv = GTFS::Trip.generate_csv do |trips|
         trips << {
           route_id: 'A',
           service_id: 'WE',
@@ -28,7 +28,7 @@ describe GTFS::Trip do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::Trip.generate_trips do |trips|
+      csv = GTFS::Trip.generate_csv do |trips|
         trips << {
           route_id: 'A',
           service_id: 'WE',

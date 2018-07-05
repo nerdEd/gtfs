@@ -13,7 +13,7 @@ describe GTFS::FareAttribute do
   end
   describe 'FareAttribute.write_fare_attributes' do
     it "should produce the correct csv output" do
-      csv = GTFS::FareAttribute.generate_fare_attributes do |fare_attributes|
+      csv = GTFS::FareAttribute.generate_csv do |fare_attributes|
         fare_attributes << {
           fare_id: 1,
           price: '0.00',
@@ -39,7 +39,7 @@ describe GTFS::FareAttribute do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::FareAttribute.generate_fare_attributes do |fare_attributes|
+      csv = GTFS::FareAttribute.generate_csv do |fare_attributes|
         fare_attributes << {
           fare_id: 1,
           price: '0.00',

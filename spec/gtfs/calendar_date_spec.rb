@@ -13,7 +13,7 @@ describe GTFS::CalendarDate do
   end
   describe 'CalendarDate.write_calendar_dates' do
     it "should produce the correct csv output" do
-      csv = GTFS::CalendarDate.generate_calendar_dates do |date_calendars|
+      csv = GTFS::CalendarDate.generate_csv do |date_calendars|
         date_calendars << {
           service_id: 1,
           date: '19900521',

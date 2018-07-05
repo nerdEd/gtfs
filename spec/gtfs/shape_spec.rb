@@ -14,7 +14,7 @@ describe GTFS::Shape do
 
   describe 'Shape.generate_shapes' do
     it "should produce the correct csv output" do
-      csv = GTFS::Shape.generate_shapes do |shapes|
+      csv = GTFS::Shape.generate_csv do |shapes|
         shapes << {
           id: 'A_shp',
           pt_lat: 37.61956,
@@ -28,7 +28,7 @@ describe GTFS::Shape do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::Shape.generate_shapes do |shapes|
+      csv = GTFS::Shape.generate_csv do |shapes|
         shapes << {
           id: 'A_shp',
           pt_lat: 37.61956,

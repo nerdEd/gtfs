@@ -14,7 +14,7 @@ describe GTFS::StopTime do
 
   describe 'Stop_time.generate_stop_times' do
     it "should produce the correct csv output" do
-      csv = GTFS::StopTime.generate_stop_times do |stop_times|
+      csv = GTFS::StopTime.generate_csv do |stop_times|
         stop_times << {
           trip_id: 'AWE1',
           arrival_time: '0:06:10',
@@ -30,7 +30,7 @@ describe GTFS::StopTime do
     end
 
     it "should filter dynamically unused csv columns" do
-      csv = GTFS::StopTime.generate_stop_times do |stop_times|
+      csv = GTFS::StopTime.generate_csv do |stop_times|
         stop_times << {
           trip_id: 'AWE1',
           arrival_time: '0:06:10',

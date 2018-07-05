@@ -13,10 +13,5 @@ module GTFS
     def self.parse_fare_attributes(data, options={})
       return parse_models(data, options)
     end
-
-    def self.generate_fare_attributes(&block)
-      generate_csv &block
-    end
-
   end
 end

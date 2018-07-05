@@ -13,9 +13,5 @@ module GTFS
     def self.parse_stop_times(data, options={})
       return parse_models(data, options)
     end
-
-    def self.generate_stop_times(&block)
-      generate_csv &block
-    end
   end
 end
