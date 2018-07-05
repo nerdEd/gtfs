@@ -2,7 +2,7 @@ module GTFS
   class Frequency
     include GTFS::Model
 
-    has_required_attrs :trip_id, :start_time, :end_time, :headway_secs
+    has_attributes :trip_id, :start_time, :end_time, :headway_secs, :exact_times
     has_optional_attrs :exact_times
     attr_accessor *attrs
 

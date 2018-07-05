@@ -2,13 +2,12 @@ module GTFS
   class Agency
     include GTFS::Model
 
-    has_required_attrs :name, :url, :timezone
-    has_optional_attrs :id, :lang, :phone, :fare_url, :email
-    has_csv_attributes :id, :name, :url, :timezone, :lang, :phone, :fare_url, :email
+    column_prefix :agency_
+
+    has_attributes :agency_id, :agency_name, :agency_url, :agency_timezone, :agency_lang, :agency_phone, :agency_fare_url, :agency_email
+    has_optional_attrs :agency_id, :agency_lang, :agency_phone, :agency_fare_url, :agency_email
 
     attr_accessor *attrs
-
-    column_prefix :agency_
 
     collection_name :agencies
     required_file true

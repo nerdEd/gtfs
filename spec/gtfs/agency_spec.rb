@@ -24,7 +24,8 @@ describe GTFS::Agency do
           phone: '410-539-5000'
         }
       end
-      csv.should eq("id,name,url,timezone,lang,phone\n1,Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,en,410-539-5000\n")
+      csv.should eq("agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone\n"+
+      "1,Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,en,410-539-5000\n")
     end
 
     it "should filter dynamically unused csv columns" do
@@ -49,7 +50,7 @@ describe GTFS::Agency do
           phone: '410-539-5000'
         }
       end
-      csv.should eq("id,name,url,timezone,phone\n"+
+      csv.should eq("agency_id,agency_name,agency_url,agency_timezone,agency_phone\n"+
       ",Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,410-539-5000\n"+
       "1,Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,\n"+
       "2,Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,410-539-5000\n"

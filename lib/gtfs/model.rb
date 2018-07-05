@@ -6,8 +6,7 @@ module GTFS
       base.extend ClassMethods
 
       base.class_variable_set('@@prefix', '')
-      base.class_variable_set('@@optional_attrs', [])
-      base.class_variable_set('@@required_attrs', [])
+      base.class_variable_set('@@attributes', [])
 
       def valid?
         !self.class.required_attrs.any?{|f| self.send(f.to_sym).nil?}
@@ -22,7 +21,7 @@ module GTFS
 
     def to_csv(columns)
       csv_values = []
-      self.class.csv_attrs.each do |attribute|
+      self.class.attrs.each do |attribute|
         csv_values << send(attribute) if columns.include?(attribute)
       end
       csv_values
@@ -38,20 +37,20 @@ module GTFS
         self.class_variable_get('@@prefix')
       end
 
-      def optional_attrs
-        self.class_variable_get('@@optional_attrs')
+      def optional_attrs_objects
+        self.class_variable_get('@@attributes').select{|a| a.optionnal}
       end
 
       def required_attrs
-        self.class_variable_get('@@required_attrs')
-      end
-
-      def csv_attrs
-        self.class_variable_get('@@csv_attrs')
+        self.class_variable_get('@@attributes').reject{|a| a.optionnal}.map(&:name)
       end
 
       def attrs
-        required_attrs + optional_attrs
+        self.class_variable_get('@@attributes').map(&:name)
+      end
+
+      def csv_attrs
+        self.class_variable_get('@@attributes').map(&:csv_name)
       end
 
 
@@ -59,16 +58,12 @@ module GTFS
       # Helper methods for setting up class variables
       #####################################
 
-      def has_required_attrs(*attrs)
-        self.class_variable_set('@@required_attrs', attrs)
+      def has_attributes(*attrs)
+        attrs.each {|a| self.class_variable_get('@@attributes') << GTFSAttribute.new(a.to_s.gsub(/^#{prefix}/, '').to_sym, a) }
       end
 
       def has_optional_attrs(*attrs)
-        self.class_variable_set('@@optional_attrs', attrs)
-      end
-
-      def has_csv_attributes(*attrs)
-        self.class_variable_set('@@csv_attrs', attrs)
+        self.class_variable_get('@@attributes').map { |a| a.set_optionnal if attrs.include?(a.csv_name) }
       end
 
       def column_prefix(prefix)
@@ -120,8 +115,6 @@ module GTFS
         end
         models
       end
-
-
     end
 
     #####################################
@@ -133,20 +126,33 @@ module GTFS
         @obects_array = []
         @csv = csv
         @klass = klass
-        @unused_attrs = @klass.optional_attrs.dup
+        @unused_attrs = @klass.optional_attrs_objects.dup
       end
 
       def push(data)
         object = @klass.new(data)
-        @unused_attrs.delete_if {|a| !object.send(a).nil? }
+        @unused_attrs.delete_if {|a| !object.send(a.name).nil? }
         @obects_array << object
       end
       alias_method :<<, :push
 
       def array_to_csv
-        columns = @klass.csv_attrs - @unused_attrs
-        @csv << columns
-        @obects_array.each {|o|  @csv << o.to_csv(columns)}
+        @csv << @klass.csv_attrs - @unused_attrs.map(&:csv_name)
+        @obects_array.each {|o|  @csv << o.to_csv(@klass.attrs - @unused_attrs.map(&:name))}
+      end
+    end
+
+    class GTFSAttribute
+      attr_accessor :name, :csv_name, :optionnal
+
+      def initialize(name,csv_name)
+        @name = name
+        @csv_name = csv_name
+        @optionnal = false
+      end
+
+      def set_optionnal
+        @optionnal = true
       end
     end
   end
