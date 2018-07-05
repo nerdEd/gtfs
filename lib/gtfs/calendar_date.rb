@@ -3,7 +3,6 @@ module GTFS
     include GTFS::Model
 
     has_attributes :service_id, :date, :exception_type
-
     attr_accessor *attrs
 
     collection_name :calendar_dates

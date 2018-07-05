@@ -6,7 +6,6 @@ module GTFS
 
     has_attributes :agency_id, :agency_name, :agency_url, :agency_timezone, :agency_lang, :agency_phone, :agency_fare_url, :agency_email
     has_optional_attrs :agency_id, :agency_lang, :agency_phone, :agency_fare_url, :agency_email
-
     attr_accessor *attrs
 
     collection_name :agencies

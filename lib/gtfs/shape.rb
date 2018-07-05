@@ -12,7 +12,6 @@ module GTFS
     required_file false
     uses_filename 'shapes.txt'
 
-
     def self.parse_shapes(data, options={})
       return parse_models(data, options)
     end
