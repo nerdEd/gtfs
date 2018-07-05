@@ -10,10 +10,10 @@ Initialize a new GTFS source:
 
     # Defaults to strict checking of required columns
     source = GTFS::Source.build(<URI or Path to GTFS zip file>)
-    
+
     # Relax the column checks, useful for sources that don't conform to standard
     source = GTFS::Source.build(<URI or Path to GTFS zip file>, {strict: false})
-    
+
 Accessing GTFS data from the source:
 
     source.agencies
@@ -22,13 +22,13 @@ Accessing GTFS data from the source:
     source.trips
     source.stop_times
     source.calendars
-    source.calendar_dates     
-    source.fare_attributes    
-    source.fare_rules         
+    source.calendar_dates
+    source.fare_attributes
+    source.fare_rules
     source.shapes
-    source.frequencies        
-    source.transfers          
-    
+    source.frequencies
+    source.transfers
+
 Alternatively:
 
     source.each_agency {|agency| puts agency}

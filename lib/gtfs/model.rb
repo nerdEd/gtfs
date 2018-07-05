@@ -127,14 +127,13 @@ module GTFS
     #####################################
     # Methods for CSV export
     #####################################
-    class WriteCollection
 
+    class WriteCollection
       def initialize(csv, klass)
         @obects_array = []
         @csv = csv
         @klass = klass
         @unused_attrs = @klass.optional_attrs.dup
-
       end
 
       def push(data)
@@ -145,13 +144,10 @@ module GTFS
       alias_method :<<, :push
 
       def array_to_csv
-
         columns = @klass.csv_attrs - @unused_attrs
-        puts columns
         @csv << columns
         @obects_array.each {|o|  @csv << o.to_csv(columns)}
       end
     end
-
   end
 end

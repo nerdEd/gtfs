@@ -25,6 +25,5 @@ module GTFS
         c.array_to_csv
       end
     end
-
   end
 end

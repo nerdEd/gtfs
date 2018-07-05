@@ -12,9 +12,7 @@ describe GTFS::Agency do
     include_examples 'models'
   end
 
-  describe 'Agency.write_agencies' do
-
-
+  describe 'Agency.generate_agencies' do
     it "should produce the correct csv output" do
       csv = GTFS::Agency.generate_agencies do |agencies|
         agencies << {
@@ -28,8 +26,6 @@ describe GTFS::Agency do
       end
       csv.should eq("id,name,url,timezone,lang,phone\n1,Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,en,410-539-5000\n")
     end
-
-    #     has_optional_attrs :id, :lang, :phone, :fare_url, :email
 
     it "should filter dynamically unused csv columns" do
       csv = GTFS::Agency.generate_agencies do |agencies|
@@ -53,13 +49,11 @@ describe GTFS::Agency do
           phone: '410-539-5000'
         }
       end
-      #:id, :name, :url, :timezone, :lang, :phone, :fare_url, :email
       csv.should eq("id,name,url,timezone,phone\n"+
       ",Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,410-539-5000\n"+
       "1,Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,\n"+
       "2,Maryland Transit Administration,http://www.mta.maryland.gov,America/New_York,410-539-5000\n"
       )
     end
-
   end
 end
