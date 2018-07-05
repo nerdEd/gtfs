@@ -15,11 +15,7 @@ module GTFS
     end
 
     def self.generate_calendar_date(&block)
-      CSV.generate do |csv|
-        c = WriteCollection.new(csv, self)
-        yield c
-        c.array_to_csv
-      end
+      generate_csv &block
     end
   end
 end
