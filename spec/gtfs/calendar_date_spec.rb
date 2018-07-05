@@ -11,11 +11,9 @@ describe GTFS::CalendarDate do
 
     include_examples 'models'
   end
-  describe 'Agency.write_agencies' do
-
-
+  describe 'CalendarDate.write_calendar_dates' do
     it "should produce the correct csv output" do
-      csv = GTFS::CalendarDate.generate_date_calendar do |date_calendars|
+      csv = GTFS::CalendarDate.generate_calendar_dates do |date_calendars|
         date_calendars << {
           service_id: 1,
           date: '19900521',
@@ -27,7 +25,7 @@ describe GTFS::CalendarDate do
           exception_type: '2'
         }
       end
-      csv.should eq("service_id,date,exception_type\n1,19900521,1\n2,20170521,2")
+      csv.should eq("service_id,date,exception_type\n1,19900521,1\n2,20170521,2\n")
     end
 
   end

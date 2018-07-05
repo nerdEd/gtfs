@@ -13,5 +13,9 @@ module GTFS
     def self.parse_frequencies(data, options={})
       return parse_models(data, options)
     end
+
+    def self.generate_frequencies(&block)
+      generate_csv &block
+    end
   end
 end

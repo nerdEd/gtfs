@@ -16,5 +16,10 @@ module GTFS
     def self.parse_routes(data, options={})
       return parse_models(data, options)
     end
+
+    def self.generate_routes(&block)
+      generate_csv &block
+    end
+    
   end
 end

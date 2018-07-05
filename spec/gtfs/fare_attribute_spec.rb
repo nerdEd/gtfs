@@ -11,4 +11,55 @@ describe GTFS::FareAttribute do
 
     include_examples 'models'
   end
+  describe 'FareAttribute.write_fare_attributes' do
+    it "should produce the correct csv output" do
+      csv = GTFS::FareAttribute.generate_fare_attributes do |fare_attributes|
+        fare_attributes << {
+          fare_id: 1,
+          price: '0.00',
+          currency_type: 'USD',
+          payment_method: 0,
+          transfers: 0,
+          agency_id: 4,
+          transfer_duration: 0
+        }
+        fare_attributes << {
+          fare_id: 2,
+          price: '0.50',
+          currency_type: 'USD',
+          payment_method: 0,
+          transfers: 0,
+          agency_id: 5,
+          transfer_duration: 0
+        }
+      end
+      csv.should eq("fare_id,price,currency_type,payment_method,transfers,agency_id,transfer_duration\n"+
+      "1,0.00,USD,0,0,4,0\n"+
+      "2,0.50,USD,0,0,5,0\n")
+    end
+
+    it "should filter dynamically unused csv columns" do
+      csv = GTFS::FareAttribute.generate_fare_attributes do |fare_attributes|
+        fare_attributes << {
+          fare_id: 1,
+          price: '0.00',
+          currency_type: 'USD',
+          payment_method: 0,
+          transfers: 0,
+        }
+        fare_attributes << {
+          fare_id: 2,
+          price: '0.50',
+          currency_type: 'USD',
+          payment_method: 0,
+          transfers: 0,
+          agency_id: 7
+        }
+      end
+      csv.should eq("fare_id,price,currency_type,payment_method,transfers,agency_id\n"+
+      "1,0.00,USD,0,0,\n"+
+      "2,0.50,USD,0,0,7\n")
+    end
+
+  end
 end

@@ -15,5 +15,9 @@ module GTFS
     def self.parse_feed_infos(data, options={})
       return parse_models(data, options)
     end
+
+    def self.generate_feed_infos(&block)
+      generate_csv &block
+    end
   end
 end
