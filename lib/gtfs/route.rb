@@ -5,7 +5,7 @@ module GTFS
     column_prefix :route_
 
     has_attributes :route_id, :agency_id, :route_short_name, :route_long_name, :route_desc, :route_type, :route_url, :route_color, :route_text_color
-    has_optional_attrs :route_agency_id, :route_desc, :route_url, :route_color, :route_text_color
+    has_optional_attrs :agency_id, :route_desc, :route_url, :route_color, :route_text_color
     attr_accessor *attrs
 
 
@@ -20,6 +20,5 @@ module GTFS
     def self.generate_routes(&block)
       generate_csv &block
     end
-    
   end
 end

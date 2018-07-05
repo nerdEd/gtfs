@@ -16,5 +16,9 @@ module GTFS
     def self.parse_shapes(data, options={})
       return parse_models(data, options)
     end
+
+    def self.generate_shapes(&block)
+      generate_csv &block
+    end
   end
 end
