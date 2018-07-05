@@ -20,6 +20,14 @@ module GTFS
       end
     end
 
+    def to_csv(columns)
+      csv_values = []
+      self.class.csv_attrs.each do |attribute|
+        csv_values << send(attribute) if columns.include?(attribute)
+      end
+      csv_values
+    end
+
     module ClassMethods
 
       #####################################
@@ -38,9 +46,14 @@ module GTFS
         self.class_variable_get('@@required_attrs')
       end
 
-      def attrs
-       required_attrs + optional_attrs
+      def csv_attrs
+        self.class_variable_get('@@csv_attrs')
       end
+
+      def attrs
+        required_attrs + optional_attrs
+      end
+
 
       #####################################
       # Helper methods for setting up class variables
@@ -52,6 +65,10 @@ module GTFS
 
       def has_optional_attrs(*attrs)
         self.class_variable_set('@@optional_attrs', attrs)
+      end
+
+      def has_csv_attributes(*attrs)
+        self.class_variable_set('@@csv_attrs', attrs)
       end
 
       def column_prefix(prefix)
@@ -67,9 +84,9 @@ module GTFS
 
         self.define_singleton_method(:singular_name) {
           self.to_s.split('::').last.
-            gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-            gsub(/([a-z\d])([A-Z])/,'\1_\2').
-            tr("-", "_").downcase
+          gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+          gsub(/([a-z\d])([A-Z])/,'\1_\2').
+          tr("-", "_").downcase
         }
       end
 
@@ -103,6 +120,38 @@ module GTFS
         end
         models
       end
+
+
     end
+
+    #####################################
+    # Methods for CSV export
+    #####################################
+    class WriteCollection
+
+      def initialize(csv, klass)
+        @obects_array = []
+        @csv = csv
+        @klass = klass
+        @unused_attrs = @klass.optional_attrs.dup
+
+      end
+
+      def push(data)
+        object = @klass.new(data)
+        @unused_attrs.delete_if {|a| !object.send(a).nil? }
+        @obects_array << object
+      end
+      alias_method :<<, :push
+
+      def array_to_csv
+
+        columns = @klass.csv_attrs - @unused_attrs
+        puts columns
+        @csv << columns
+        @obects_array.each {|o|  @csv << o.to_csv(columns)}
+      end
+    end
+
   end
 end
