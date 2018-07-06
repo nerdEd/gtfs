@@ -10,7 +10,7 @@ module GTFS
       ENTITIES.each do |entity|
         instance_variable_set("@#{entity.name}_csv", entity.new_write_collection )
 
-        define_singleton_method entity.name do 
+        define_singleton_method entity.name do
           instance_variable_get("@#{entity.name}_csv")
         end
       end
@@ -26,7 +26,7 @@ module GTFS
             c.array_to_csv csv
           end
 
-          zipfile.get_output_stream("#{entity.filename}") {|f| f.puts entity_csv} if entity.required_file? || (entity_csv.nil? && !entity_csv.empty?)
+          zipfile.get_output_stream("#{entity.filename}") {|f| f.puts entity_csv} if entity.required_file? || (!entity_csv.nil? && !entity_csv.empty?)
         end
       end
     end
