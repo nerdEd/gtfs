@@ -5,7 +5,7 @@ module GTFS
     column_prefix :shape_
 
     has_attributes :shape_id, :shape_pt_lat, :shape_pt_lon, :shape_pt_sequence, :shape_dist_traveled
-    has_optional_attrs :shape_dist_traveled
+    set_attributes_optional :shape_dist_traveled
     attr_accessor *attrs
 
     collection_name :shapes

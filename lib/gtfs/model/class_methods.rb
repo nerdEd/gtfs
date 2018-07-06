@@ -37,7 +37,7 @@ module GTFS
         attrs.each {|a| self.class_variable_get('@@attributes') << GTFSAttribute.new(a.to_s.gsub(/^#{prefix}/, '').to_sym, a) }
       end
 
-      def has_optional_attrs(*attrs)
+      def set_attributes_optional(*attrs)
         self.class_variable_get('@@attributes').map { |a| a.set_optionnal if attrs.include?(a.csv_name) }
       end
 

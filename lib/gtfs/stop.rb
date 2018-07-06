@@ -5,7 +5,7 @@ module GTFS
     column_prefix :stop_
 
     has_attributes :stop_id, :stop_code, :stop_name, :stop_desc, :stop_lat, :stop_lon, :zone_id, :stop_url, :location_type, :parent_station, :stop_timezone, :wheelchair_boarding
-    has_optional_attrs :stop_code, :stop_desc, :zone_id, :stop_url, :location_type, :parent_station, :stop_timezone, :wheelchair_boarding
+    set_attributes_optional :stop_code, :stop_desc, :zone_id, :stop_url, :location_type, :parent_station, :stop_timezone, :wheelchair_boarding
     attr_accessor *attrs
 
     collection_name :stops

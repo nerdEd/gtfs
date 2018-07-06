@@ -11,8 +11,6 @@ describe GTFS::FareRule do
     include_examples 'models'
   end
 
-  # has_attributes :fare_id, :route_id, :origin_id, :destination_id, :contains_id
-  # has_optional_attrs :route_id, :origin_id, :destination_id, :contains_id
   describe 'FareRules.write_fare_rules' do
     it "should produce the correct csv output" do
       csv = GTFS::FareRule.generate_csv do |fare_rules|

@@ -3,7 +3,7 @@ module GTFS
     include GTFS::Model
 
     has_attributes :trip_id, :start_time, :end_time, :headway_secs, :exact_times
-    has_optional_attrs :exact_times
+    set_attributes_optional :exact_times
     attr_accessor *attrs
 
     collection_name :frequencies
