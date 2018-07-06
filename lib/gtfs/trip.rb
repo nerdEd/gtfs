@@ -2,11 +2,12 @@ module GTFS
   class Trip
     include GTFS::Model
 
-    has_required_attrs :route_id, :service_id, :id
-    has_optional_attrs :headsign, :short_name, :direction_id, :block_id, :shape_id, :wheelchair_accessible, :bikes_allowed
+    column_prefix :trip_
+
+    has_attributes :route_id, :service_id, :trip_id, :trip_headsign, :trip_short_name, :direction_id, :block_id, :shape_id, :wheelchair_accessible, :bikes_allowed
+    set_attributes_optional :trip_headsign, :trip_short_name, :direction_id, :block_id, :shape_id, :wheelchair_accessible, :bikes_allowed
     attr_accessor *attrs
 
-    column_prefix :trip_
 
     collection_name :trips
     required_file true

@@ -2,11 +2,11 @@ module GTFS
   class Route
     include GTFS::Model
 
-    has_required_attrs :id, :short_name, :long_name, :type
-    has_optional_attrs :agency_id, :desc, :url, :color, :text_color
-    attr_accessor *attrs
-
     column_prefix :route_
+
+    has_attributes :route_id, :agency_id, :route_short_name, :route_long_name, :route_desc, :route_type, :route_url, :route_color, :route_text_color
+    set_attributes_optional :agency_id, :route_desc, :route_url, :route_color, :route_text_color
+    attr_accessor *attrs
 
     collection_name :routes
     required_file true

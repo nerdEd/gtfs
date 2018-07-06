@@ -11,4 +11,51 @@ describe GTFS::Route do
 
     include_examples 'models'
   end
+
+  describe 'Route.generate_routes' do
+    it "should produce the correct csv output" do
+      csv = GTFS::Route.generate_csv do |routes|
+        routes << {
+          id: 'A',
+          short_name: '17',
+          long_name: 'Mission',
+          desc: 'The "A" route travels from lower Mission to Downtown.',
+          type: 3,
+          url: 'http://test.test/test'
+        }
+      end
+      csv.should eq("route_id,route_short_name,route_long_name,route_desc,route_type,route_url\n"+
+      "A,17,Mission,\"The \"\"A\"\" route travels from lower Mission to Downtown.\",3,http://test.test/test\n")
+    end
+
+    it "should filter dynamically unused csv columns" do
+      csv = GTFS::Route.generate_csv do |routes|
+        routes << {
+          id: 'A',
+          short_name: '17',
+          long_name: 'Mission',
+          type: 3,
+          url: 'http://test.test/test'
+        }
+        routes << {
+          id: 'A',
+          short_name: '17',
+          long_name: 'Mission',
+          type: 3
+        }
+        routes << {
+          id: 'A',
+          short_name: '17',
+          long_name: 'Mission',
+          type: 3,
+          url: 'http://test.test/test'
+        }
+      end
+      csv.should eq("route_id,route_short_name,route_long_name,route_type,route_url\n"+
+      "A,17,Mission,3,http://test.test/test\n"+
+      "A,17,Mission,3,\n"+
+      "A,17,Mission,3,http://test.test/test\n"
+      )
+    end
+  end
 end

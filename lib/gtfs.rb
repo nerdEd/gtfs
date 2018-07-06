@@ -14,6 +14,7 @@ require 'gtfs/fare_attribute'
 require 'gtfs/fare_rule'
 require 'gtfs/frequency'
 require 'gtfs/transfer'
+require 'gtfs/target'
 
 require 'gtfs/source'
 require 'gtfs/url_source'
