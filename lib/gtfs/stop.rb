@@ -1,10 +1,11 @@
 module GTFS
-  class Stop 
+  class Stop
     include GTFS::Model
-    
-    has_required_attrs :id, :name, :lat, :lon
-    has_optional_attrs :code, :desc, :zone_id, :url, :location_type, :parent_station, :timezone, :wheelchair_boarding
+
     column_prefix :stop_
+
+    has_attributes :stop_id, :stop_code, :stop_name, :stop_desc, :stop_lat, :stop_lon, :zone_id, :stop_url, :location_type, :parent_station, :stop_timezone, :wheelchair_boarding
+    set_attributes_optional :stop_code, :stop_desc, :zone_id, :stop_url, :location_type, :parent_station, :stop_timezone, :wheelchair_boarding
     attr_accessor *attrs
 
     collection_name :stops
@@ -19,4 +20,3 @@ module GTFS
     end
   end
 end
-

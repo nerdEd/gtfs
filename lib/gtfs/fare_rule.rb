@@ -2,8 +2,8 @@ module GTFS
   class FareRule
     include GTFS::Model
 
-    has_required_attrs :fare_id
-    has_optional_attrs :route_id, :origin_id, :destination_id, :contains_id
+    has_attributes :fare_id, :route_id, :origin_id, :destination_id, :contains_id
+    set_attributes_optional :route_id, :origin_id, :destination_id, :contains_id
     attr_accessor *attrs
 
     collection_name :fare_rules

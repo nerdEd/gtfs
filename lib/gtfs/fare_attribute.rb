@@ -2,8 +2,8 @@ module GTFS
   class FareAttribute
     include GTFS::Model
 
-    has_required_attrs :fare_id, :price, :currency_type, :payment_method, :transfers
-    has_optional_attrs :transfer_duration 
+    has_attributes :fare_id, :price, :currency_type, :payment_method, :transfers, :agency_id, :transfer_duration
+    set_attributes_optional :agency_id, :transfer_duration
     attr_accessor *attrs
 
     collection_name :fare_attributes

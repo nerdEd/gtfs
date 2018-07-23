@@ -11,5 +11,56 @@ describe GTFS::StopTime do
 
     include_examples 'models'
   end
+
+  describe 'Stop_time.generate_stop_times' do
+    it "should produce the correct csv output" do
+      csv = GTFS::StopTime.generate_csv do |stop_times|
+        stop_times << {
+          trip_id: 'AWE1',
+          arrival_time: '0:06:10',
+          departure_time: '0:06:10',
+          stop_id: 'S1',
+          stop_sequence: 1,
+          pickup_type: 0,
+          drop_off_type: 0,
+        }
+      end
+      csv.should eq("trip_id,arrival_time,departure_time,stop_id,stop_sequence,pickup_type,drop_off_type\n"+
+      "AWE1,0:06:10,0:06:10,S1,1,0,0\n")
+    end
+
+    it "should filter dynamically unused csv columns" do
+      csv = GTFS::StopTime.generate_csv do |stop_times|
+        stop_times << {
+          trip_id: 'AWE1',
+          arrival_time: '0:06:10',
+          departure_time: '0:06:10',
+          stop_id: 'S1',
+          stop_sequence: 1,
+          pickup_type: 0,
+        }
+        stop_times << {
+          trip_id: 'AWE1',
+          arrival_time: '0:06:10',
+          departure_time: '0:06:10',
+          stop_id: 'S1',
+          stop_sequence: 1,
+        }
+        stop_times << {
+          trip_id: 'AWE1',
+          arrival_time: '0:06:10',
+          departure_time: '0:06:10',
+          stop_id: 'S1',
+          stop_sequence: 1,
+          pickup_type: 0,
+        }
+      end
+      csv.should eq("trip_id,arrival_time,departure_time,stop_id,stop_sequence,pickup_type\n"+
+      "AWE1,0:06:10,0:06:10,S1,1,0\n"+
+      "AWE1,0:06:10,0:06:10,S1,1,\n"+
+      "AWE1,0:06:10,0:06:10,S1,1,0\n"
+      )
+    end
+  end
 end
 
