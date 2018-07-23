@@ -6,7 +6,7 @@ module GTFS
     attr_accessor *attrs
 
     collection_name :calendar_dates
-    required_file true
+    required_file false
     uses_filename 'calendar_dates.txt'
 
     def self.parse_calendar_dates(data, options={})

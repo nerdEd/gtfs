@@ -45,7 +45,7 @@ describe GTFS::Target do
       end
 
       Zip::File.open(zip_path) do |zip|
-        zip.entries.length.should eq(7)
+        zip.entries.length.should eq(6)
       end
 
       source = GTFS::Source.build(zip_path)
