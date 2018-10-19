@@ -1,4 +1,4 @@
 module GTFS
-  class InvalidSourceException < Exception
+  class InvalidSourceException < StandardError
   end
 end
