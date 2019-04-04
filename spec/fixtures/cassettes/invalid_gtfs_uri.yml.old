@@ -1,38 +1,36 @@
 ---
-http_interactions:
-- request:
-    method: get
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :get
     uri: http://www.edschmalzle.com:80/gtfs.zip
-    body: !!null
-    headers: !!null
-  response:
-    status:
-      code: 200
-      message: OK
+    body: !!null 
+    headers: !!null 
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 404
+      message: Not Found
     headers:
-      Date:
+      date:
       - Wed, 18 Jan 2012 05:04:53 GMT
-      Server:
+      server:
       - Apache
-      Vary:
+      vary:
       - Cookie,Accept-Encoding
-      X-Pingback:
+      x-pingback:
       - http://www.edschmalzle.com/xmlrpc.php
-      Expires:
+      expires:
       - Wed, 11 Jan 1984 05:00:00 GMT
-      Cache-control:
+      cache-control:
       - no-cache, must-revalidate, max-age=0
-      Pragma:
+      pragma:
       - no-cache
-      Last-modified:
+      last-modified:
       - Wed, 18 Jan 2012 05:04:54 GMT
-      Transfer-encoding:
+      transfer-encoding:
       - chunked
-      Content-type:
+      content-type:
       - text/html; charset=UTF-8
-    body:
-      encoding: ASCII-8BIT
-      string: ! "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html
+    body: ! "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html
       xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en-US\">\r\n<head
       profile=\"http://gmpg.org/xfn/11\">\r\n<meta http-equiv=\"Content-Type\" content=\"text/html;
       charset=UTF-8\" />\r\n<title>Ed Schmalzle   &raquo; Page not found</title>\r\n<link
@@ -70,5 +68,3 @@ http_interactions:
       Schmalzle\t\t\tAll rights reserved. Design by <a href=\"http://www.freewpthemes.net/\">Free
       WordPress Themes</a> &nbsp;&bull;&nbsp;\r\n\t\t\tPowered by <a href=\"http://wordpress.org/\">WordPress</a></p>\r\n\t</div>\r\n</div>\r\n</body></html>"
     http_version: '1.1'
-  recorded_at: Thu, 04 Apr 2019 16:27:57 GMT
-recorded_with: VCR 4.0.0

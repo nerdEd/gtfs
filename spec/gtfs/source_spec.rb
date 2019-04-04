@@ -5,7 +5,7 @@ describe GTFS::Source do
     File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs.zip')
   end
 
-  let(:source_missing_required_files) do 
+  let(:source_missing_required_files) do
     File.expand_path(File.dirname(__FILE__) + '/../fixtures/missing_files.zip')
   end
 
@@ -14,8 +14,7 @@ describe GTFS::Source do
     let(:data_source) {valid_local_source}
     subject {GTFS::Source.build(data_source, opts)}
 
-    context 'with a url as a data root' do
-      use_vcr_cassette('valid_gtfs_uri')
+    context 'with a url as a data root', vcr: { :cassette_name => 'valid_gtfs_uri' } do
       let(:data_source) {'http://dl.dropbox.com/u/416235/work/valid_gtfs.zip'}
 
       it {should be_instance_of GTFS::URLSource}

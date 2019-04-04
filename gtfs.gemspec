@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.email       = ['ed@nerded.net']
   gem.homepage    = 'https://github.com/nerdEd/gtfs'
 
-  gem.required_ruby_version = '>= 1.9.2'
+  gem.required_ruby_version = '>= 2.4.0'
 
   gem.add_dependency 'rake'
   gem.add_dependency 'multi_json'
@@ -25,8 +25,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', ['>= 2.0.0']
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'ruby-debug19'
-  gem.add_development_dependency 'vcr'
-  gem.add_development_dependency 'fakeweb'
+  gem.add_development_dependency 'vcr', ['~> 3.0.3']
+  gem.add_development_dependency 'webmock', ['~> 3.5.0']
 
   gem.files = `git ls-files`.split("\n")
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")

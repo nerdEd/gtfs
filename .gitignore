@@ -1,4 +1,5 @@
 Session.vim
 coverage
+.ruby-version
 .rvmrc
 *.gem
