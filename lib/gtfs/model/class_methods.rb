@@ -84,7 +84,7 @@ module GTFS
         return [] if data.nil? || data.empty?
 
         models = []
-        CSV.parse(data, :headers => true) do |row|
+        CSV.parse(data, headers: true, liberal_parsing: true) do |row|
           model = parse_model(row.to_hash, options)
           models << model if options[:strict] == false || model.valid?
         end
