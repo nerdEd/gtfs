@@ -39,7 +39,7 @@ module GTFS
       end
 
       def attrs
-       required_attrs + optional_attrs
+        required_attrs + optional_attrs
       end
 
       #####################################
