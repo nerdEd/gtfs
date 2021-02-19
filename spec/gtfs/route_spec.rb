@@ -10,5 +10,26 @@ describe GTFS::Route do
     subject {GTFS::Route.parse_routes(source_text, opts)}
 
     include_examples 'models'
+
+    context '#valid' do
+      let(:opts) {{}}
+      let(:source_text) {header_line + valid_line}
+
+      context 'routes with only short name' do
+        let(:valid_line) {"4679,1,001,,,3,,0000FF,FFFFFF\n"}
+
+        it "are valid" do
+          subject.first.valid?.should == true
+        end
+      end
+
+      context 'routes with only long name' do
+        let(:valid_line) {"4679,1,,SINAI - FORT McHENRY,,3,,0000FF,FFFFFF\n"}
+
+        it "are valid" do
+          subject.first.valid?.should == true
+        end
+      end
+    end
   end
 end
