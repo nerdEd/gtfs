@@ -12,8 +12,12 @@ describe GTFS::Source do
     File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs.zip')
   end
 
-  let(:source_missing_required_files) do 
+  let(:source_missing_required_files) do
     File.expand_path(File.dirname(__FILE__) + '/../fixtures/missing_files.zip')
+  end
+
+  let (:valid_local_source_missing_optional_files) do
+    File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs_missing_optional_files.zip')
   end
 
   describe '#build' do
@@ -83,5 +87,16 @@ describe GTFS::Source do
   end
 
   describe '#stop_times' do
+  end
+
+  describe '#transfers' do
+    subject {source.transfers}
+
+    context 'when the source is missing transfers' do
+      let(:source) { GTFS::Source.build valid_local_source_missing_optional_files }
+
+      it {should_not raise_exception GTFS::InvalidSourceException}
+      it {should be_empty}
+    end
   end
 end

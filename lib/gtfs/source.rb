@@ -1,5 +1,6 @@
 require 'tmpdir'
 require 'fileutils'
+require 'stringio'
 require 'zip'
 
 module GTFS
@@ -57,14 +58,14 @@ module GTFS
       Dir.entries(@tmp_dir)
     end
 
-    def raise_if_missing_source(filename)
-      file_missing = !entries.include?(filename)
-      raise InvalidSourceException.new("Missing required source file: #{filename}") if file_missing
+    def raise_if_required_source(entity)
+      raise InvalidSourceException.new("Missing required source file: #{entity.filename}") if entity.required_file?
     end
 
     ENTITIES.each do |entity|
       define_method entity.name.to_sym do
-        parse_file entity.filename do |f|
+        parse_entity entity do |f|
+          files[entity.filename] ||= f
           entity.send("parse_#{entity.name}".to_sym, f.read, options)
         end
       end
@@ -78,10 +79,12 @@ module GTFS
       @files ||= {}
     end
 
-    def parse_file(filename)
-      raise_if_missing_source filename
-      open File.join(@tmp_dir, '/', filename), 'r:bom|utf-8' do |f|
-        files[filename] ||= yield f
+    def parse_entity(entity)
+      if entries.include?(entity.filename)
+        yield open(File.join(@tmp_dir, entity.filename), 'r:bom|utf-8')
+      else
+        raise_if_required_source entity
+        yield StringIO.new
       end
     end
   end
