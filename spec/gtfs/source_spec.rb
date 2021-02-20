@@ -45,7 +45,7 @@ describe GTFS::Source do
     context 'with options to disable strict checks' do
       let(:opts) {{strict: false}}
 
-      its(:options) {should == {strict: false}}
+      its(:options) {should == GTFS::Source::DEFAULT_OPTIONS.merge({strict: false})}
     end
   end
 
