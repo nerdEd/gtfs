@@ -6,7 +6,6 @@ require './lib/gtfs/version'
 Gem::Specification.new do |gem|
   gem.name    = 'gtfs'
   gem.version = GTFS::VERSION
-  gem.date    = Date.today.to_s
  
   gem.summary = 'Load and read GTFS data from zip bundles'
   gem.description = 'gtfs reads GTFS data from a google-compliant Zip bundle 
@@ -16,6 +15,8 @@ Gem::Specification.new do |gem|
   gem.email       = ['ed@nerded.net']
   gem.homepage    = 'https://github.com/nerdEd/gtfs'
 
+  gem.license = 'MIT'
+  
   gem.required_ruby_version = '>= 1.9.2'
 
   gem.add_dependency 'rake'
