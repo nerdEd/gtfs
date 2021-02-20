@@ -5,15 +5,15 @@ require 'zip'
 module GTFS
   class Source
 
-    ENTITIES = [GTFS::Agency, GTFS::Stop, GTFS::Route, GTFS::Trip, GTFS::StopTime,
-                GTFS::Calendar, GTFS::CalendarDate, GTFS::Shape, GTFS::FareAttribute,
-                GTFS::FareRule, GTFS::Frequency, GTFS::Transfer]
+    ENTITIES = [GTFS::Agency, GTFS::Stop, GTFS::Route, GTFS::Trip, GTFS::StopTime, GTFS::Calendar, GTFS::CalendarDate,
+                GTFS::Shape, GTFS::FareAttribute, GTFS::FareRule, GTFS::Frequency, GTFS::Transfer, GTFS::FeedInfo,
+                GTFS::Attribution, GTFS::Pathway, GTFS::Translation, GTFS::Level]
 
     REQUIRED_SOURCE_FILES = ENTITIES.select(&:required_file?).map(&:filename)
     OPTIONAL_SOURCE_FILES = ENTITIES.reject(&:required_file?).map(&:filename)
     SOURCE_FILES = ENTITIES.map(&:filename)
 
-    DEFAULT_OPTIONS = {strict: true}
+    DEFAULT_OPTIONS = {strict: true, encoding: "utf-8"}
 
     attr_accessor :source, :archive, :options
 
@@ -64,13 +64,13 @@ module GTFS
 
     ENTITIES.each do |entity|
       define_method entity.name.to_sym do
-        parse_file entity.filename do |f|
+        parse_file entity.filename, options do |f|
           entity.send("parse_#{entity.name}".to_sym, f.read, options)
         end
       end
 
       define_method "each_#{entity.singular_name}".to_sym do |&block|
-        entity.each(File.join(@tmp_dir, entity.filename)) { |model| block.call model }
+        entity.each(File.join(@tmp_dir, entity.filename), options) { |model| block.call model }
       end
     end
 
@@ -78,9 +78,9 @@ module GTFS
       @files ||= {}
     end
 
-    def parse_file(filename)
+    def parse_file(filename, options)
       raise_if_missing_source filename
-      open File.join(@tmp_dir, '/', filename), 'r:bom|utf-8' do |f|
+      open File.join(@tmp_dir, '/', filename), "r:#{options[:encoding]}" do |f|
         files[filename] ||= yield f
       end
     end

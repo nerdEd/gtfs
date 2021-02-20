@@ -3,7 +3,7 @@ module GTFS
     include GTFS::Model
 
     has_required_attrs :id, :type
-    has_optional_attrs :agency_id, :desc, :url, :color, :text_color, :short_name, :long_name
+    has_optional_attrs :agency_id, :desc, :url, :color, :text_color, :short_name, :long_name, :sort_order
     attr_accessor *attrs
 
     column_prefix :route_

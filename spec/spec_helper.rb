@@ -6,16 +6,20 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'bundler/setup'
 require 'rspec'
+require 'rspec/its'
 require 'vcr'
 require 'gtfs'
 
 require File.expand_path(File.dirname(__FILE__) + '/support/model_shared_examples')
 
 RSpec.configure do |config|
-  config.extend VCR::RSpec::Macros
+  config.expect_with :rspec do |expectations|
+    expectations.syntax = [:should , :expect]
+    expectations.on_potential_false_positives = :nothing
+  end
 end
 
-VCR.config do |c|
+VCR.configure do |c|
   c.cassette_library_dir = File.join(File.dirname(__FILE__), '/fixtures/cassettes')
-  c.stub_with :fakeweb
+  c.hook_into :webmock
 end

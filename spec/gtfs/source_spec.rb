@@ -1,6 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe GTFS::Source do
+  before(:each) do
+    VCR.insert_cassette 'valid_gtfs_uri'
+  end
+  after(:each) do
+    VCR.eject_cassette
+  end
+
   let(:valid_local_source) do
     File.expand_path(File.dirname(__FILE__) + '/../fixtures/valid_gtfs.zip')
   end
@@ -15,8 +22,7 @@ describe GTFS::Source do
     subject {GTFS::Source.build(data_source, opts)}
 
     context 'with a url as a data root' do
-      use_vcr_cassette('valid_gtfs_uri')
-      let(:data_source) {'http://dl.dropbox.com/u/416235/work/valid_gtfs.zip'}
+      let(:data_source) {'https://developers.google.com/transit/gtfs/examples/sample-feed.zip'}
 
       it {should be_instance_of GTFS::URLSource}
       its(:options) {should == GTFS::Source::DEFAULT_OPTIONS}
@@ -39,7 +45,7 @@ describe GTFS::Source do
     context 'with options to disable strict checks' do
       let(:opts) {{strict: false}}
 
-      its(:options) {should == {strict: false}}
+      its(:options) {should == GTFS::Source::DEFAULT_OPTIONS.merge({strict: false})}
     end
   end
 
