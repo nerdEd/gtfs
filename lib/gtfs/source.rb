@@ -5,9 +5,9 @@ require 'zip'
 module GTFS
   class Source
 
-    ENTITIES = [GTFS::Agency, GTFS::Stop, GTFS::Route, GTFS::Trip, GTFS::StopTime,
-                GTFS::Calendar, GTFS::CalendarDate, GTFS::Shape, GTFS::FareAttribute,
-                GTFS::FareRule, GTFS::Frequency, GTFS::Transfer, GTFS::FeedInfo]
+    ENTITIES = [GTFS::Agency, GTFS::Stop, GTFS::Route, GTFS::Trip, GTFS::StopTime, GTFS::Calendar, GTFS::CalendarDate,
+                GTFS::Shape, GTFS::FareAttribute, GTFS::FareRule, GTFS::Frequency, GTFS::Transfer, GTFS::FeedInfo,
+                GTFS::Attribution, GTFS::Pathway, GTFS::Translation, GTFS::Level]
 
     REQUIRED_SOURCE_FILES = ENTITIES.select(&:required_file?).map(&:filename)
     OPTIONAL_SOURCE_FILES = ENTITIES.reject(&:required_file?).map(&:filename)
