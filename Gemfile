@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'multi_json', '1.0.4'
-gem 'rubyzip', '~> 1.1'
+gemspec
 
 group :test, :development do
   gem 'simplecov', :require => false
