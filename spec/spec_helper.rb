@@ -17,6 +17,7 @@ RSpec.configure do |config|
     expectations.syntax = [:should , :expect]
     expectations.on_potential_false_positives = :nothing
   end
+  config.raise_errors_for_deprecations!
 end
 
 VCR.configure do |c|

@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/nerdEd/gtfs.svg?branch=master)](https://travis-ci.org/nerdEd/gtfs)
-
 ### GTFS Ruby
+
+[![Run CI Tasks](https://github.com/nerdEd/gtfs/actions/workflows/ci.yml/badge.svg)](https://github.com/nerdEd/gtfs/actions/workflows/ci.yml)
 
 A Ruby wrapper for the [General Transit Feed Specification](https://developers.google.com/transit/gtfs/)
 
