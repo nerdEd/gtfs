@@ -46,7 +46,7 @@ module GTFS
     end
 
     def self.build(data_root, opts={})
-      if File.exists?(data_root)
+      if File.exist?(data_root)
         src = LocalSource.new(data_root, opts)
       else
         src = URLSource.new(data_root, opts)
