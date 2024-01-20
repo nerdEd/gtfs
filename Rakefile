@@ -20,10 +20,8 @@ task :check_version do
   response = Net::HTTP.get_response(URI.parse(url))
 
   if response.code == '200'
-    puts "Version #{version} exists on rubygems"
-    exit 1
+    puts 'exists'
+  else
+    puts 'new'
   end
-
-  puts "Version #{version} does not exist on rubygems"
-  exit 0
 end
