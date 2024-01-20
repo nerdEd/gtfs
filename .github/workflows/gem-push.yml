@@ -36,7 +36,14 @@ jobs:
         GEM_HOST_API_KEY: "Bearer ${{secrets.GITHUB_TOKEN}}"
         OWNER: ${{ github.repository_owner }}
 
+    - name: Check if version exists
+      id: checkversionexists
+      run: |
+        rake check_version
+        echo "VERSION_EXISTS=$?" >> $GITHUB_OUTPUT
+
     - name: Publish to RubyGems
+      if: steps.checkversionexists.outputs.VERSION_EXISTS == '0'
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials
