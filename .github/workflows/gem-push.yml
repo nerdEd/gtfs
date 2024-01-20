@@ -33,7 +33,7 @@ jobs:
         echo "VERSION_EXISTS=$?" >> $GITHUB_OUTPUT
 
     - name: Publish to GPR
-      if: steps.checkversionexists.outputs.VERSION_EXISTS == '0'
+      if: ${{ steps.checkversionexists.outputs.VERSION_EXISTS == 0 }}
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials
@@ -46,7 +46,7 @@ jobs:
         OWNER: ${{ github.repository_owner }}
 
     - name: Publish to RubyGems
-      if: steps.checkversionexists.outputs.VERSION_EXISTS == '0'
+      if: ${{ steps.checkversionexists.outputs.VERSION_EXISTS == 0 }}
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials
