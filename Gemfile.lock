@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gtfs (0.4.1)
+    gtfs (0.4.2)
       multi_json
       rake
       rubyzip (~> 2.3)
