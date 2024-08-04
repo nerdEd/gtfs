@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
 
   gem.license = 'MIT'
 
-  gem.required_ruby_version = '>= 2.7'
+  gem.required_ruby_version = '>= 3.0'
 
   gem.add_dependency 'rake'
   gem.add_dependency 'multi_json'
