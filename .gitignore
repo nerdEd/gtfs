@@ -3,6 +3,7 @@ coverage
 .rvmrc
 *.gem
 Gemfile.lock
+spec/fixtures/cassettes
 
 .DS_Store
 .ruby-version
