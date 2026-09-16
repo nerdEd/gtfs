@@ -2,3 +2,7 @@ Session.vim
 coverage
 .rvmrc
 *.gem
+Gemfile.lock
+
+.DS_Store
+.ruby-version
