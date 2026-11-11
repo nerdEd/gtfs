@@ -12,13 +12,13 @@ jobs:
 
     strategy:
         matrix:
-          ruby-version: ['3.0', '3.1', '3.2']
+          ruby-version: ['3.3', '3.4', '4.0']
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
@@ -26,3 +26,53 @@ jobs:
       - name: Run Tests
         run: |
           bundle exec rake -t
+
+  publish:
+    name: Build + Publish
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+
+      - name: Check if version exists
+        id: checkversionexists
+        run: |
+          echo "version_status=$(bundle exec rake check_version)" >> $GITHUB_OUTPUT
+
+      - name: Build gem
+        if: ${{ steps.checkversionexists.outputs.version_status == 'new' }}
+        run: gem build *.gemspec
+
+      - name: Publish to GPR
+        if: ${{ steps.checkversionexists.outputs.version_status == 'new' }}
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:github: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem
+        env:
+          GEM_HOST_API_KEY: "Bearer ${{secrets.GITHUB_TOKEN}}"
+          OWNER: ${{ github.repository_owner }}
+
+      - name: Publish to RubyGems
+        if: ${{ steps.checkversionexists.outputs.version_status == 'new' }}
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          gem push *.gem
+        env:
+          GEM_HOST_API_KEY: "${{secrets.RUBYGEMS_AUTH_TOKEN}}"
